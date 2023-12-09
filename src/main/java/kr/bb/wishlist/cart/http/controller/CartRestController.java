@@ -6,9 +6,12 @@ import kr.bb.wishlist.cart.dto.CartItemProductIdDto;
 import kr.bb.wishlist.cart.dto.DeleteCartItemListCommand;
 import kr.bb.wishlist.cart.dto.command.AddCartItemCommand;
 import kr.bb.wishlist.cart.dto.command.DeleteCartItemListCommand;
+import kr.bb.wishlist.cart.dto.command.UpdateCartItemCommand;
 import kr.bb.wishlist.cart.dto.response.GetUserCartItemsResponse;
+import kr.bb.wishlist.cart.http.controller.message.CartItemStockRequest;
 import kr.bb.wishlist.cart.http.message.GetCartItemProductInfoMessageRequest;
 import kr.bb.wishlist.cart.service.CartService;
+import kr.bb.wishlist.cart.valueobject.AddCartItemStatus;
 import kr.bb.wishlist.common.valueobject.ProductId;
 import kr.bb.wishlist.common.valueobject.UserId;
 import lombok.RequiredArgsConstructor;
@@ -24,22 +27,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CartRestController {
 
+  private final CartItemStockRequest cartItemStockRequest;
   private final CartService<UserId, ProductId> cartService;
-  private final GetCartItemProductInfoMessageRequest messageRequest;
+  private final GetCartItemProductInfoMessageRequest productInfoRequest;
+
 
   @GetMapping("/carts")
   public CommonResponse<GetUserCartItemsResponse> getUserCartProducts(
       @RequestHeader Long userId) {
     CartItemProductIdDto productIdList = cartService.getCartItem(new UserId(userId));
-    return CommonResponse.success(messageRequest.request(productIdList));
+    return CommonResponse.success(productInfoRequest.request(productIdList));
   }
 
   @PostMapping("/carts")
-  public CommonResponse<String> addCartItem(
+  public CommonResponse<AddCartItemStatus> addCartItem(
       @RequestHeader Long userId, @Valid @RequestBody AddCartItemCommand<ProductId> command) {
-    cartService.addCartItem(new UserId(userId), command.getProductId(),
-        command.getSelectedQuantity());
-    return CommonResponse.success("장바구니 상품 담기 성공");
+    return CommonResponse.success( cartService.addCartItem(new UserId(userId), command.getProductId(),
+        command.getSelectedQuantity()));
   }
 
 
@@ -47,12 +51,15 @@ public class CartRestController {
   public CommonResponse<String> deleteCartItmes(
       @RequestHeader Long userId, @Valid @RequestBody DeleteCartItemListCommand command) {
     cartService.deleteCartItems(new UserId(userId), command.getProductIdList());
+    return CommonResponse.success("장바구니 상품 삭제 성공");
   }
 
   @PutMapping("/carts/products/{productId}")
   public CommonResponse<String> updateCartItemSelectedQuantity(
-      @RequestHeader Long userId, @Valid @RequestBody UpdatepCartItemCommand command,
+      @RequestHeader Long userId, @Valid @RequestBody UpdateCartItemCommand<ProductId> command,
       @PathVariable Long productId) {
+
+
 
   }
 

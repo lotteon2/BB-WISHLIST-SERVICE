@@ -6,8 +6,12 @@ import javax.transaction.Transactional;
 import kr.bb.wishlist.cart.dto.CartItemProductIdDto;
 import kr.bb.wishlist.cart.entity.CartCompositekey;
 import kr.bb.wishlist.cart.entity.CartEntity;
+import kr.bb.wishlist.cart.exception.CartDomainException;
+import kr.bb.wishlist.cart.mapper.CartMapper;
 import kr.bb.wishlist.cart.repository.CartJpaRepository;
 import kr.bb.wishlist.cart.repository.ProductIdProjection;
+import kr.bb.wishlist.cart.util.CartCompkeyMakerUtil;
+import kr.bb.wishlist.cart.valueobject.AddCartItemStatus;
 import kr.bb.wishlist.common.valueobject.ProductId;
 import kr.bb.wishlist.common.valueobject.UserId;
 import lombok.RequiredArgsConstructor;
@@ -36,20 +40,29 @@ public class CartServiceImpl implements
   }
 
   @Override
-  public void addCartItem(UserId userId, ProductId productId, int selectedQuantity) {
+  public AddCartItemStatus addCartItem(UserId userId, ProductId productId, int selectedQuantity) {
     addCartItemStrategy.addCartItem(userId,productId,selectedQuantity);
   }
 
   @Transactional
   @Override
   public void deleteCartItems(UserId userId, List<ProductId> productIdList) {
-    for(ProductId productId: productIdList){
-      deleteCartItemStrategy.delete(userId,productId);
+    for (ProductId productId : productIdList) {
+      deleteCartItemStrategy.delete(userId, productId);
     }
   }
 
-  private CartCompositekey getCartCompKey(UserId userId, ProductId productId) {
-    return new CartCompositekey(userId.getValue(), productId.getValue());
+  @Override
+  public void updateCartItemSelectedQuantity(UserId userId, ProductId productId,
+      int increasedQuantity) {
+    CartEntity cartEntity = repository.findById(
+        CartCompkeyMakerUtil.cartEntityCompKey(userId, productId)).orElseThrow(() -> {
+      throw new CartDomainException("존재하지 않는 카트 상품입니다.");
+    });
 
+    int alreadySelectedQuantity = cartEntity.getSelectedQuantity();
+
+    CartMapper.getCartEntityWithUpdatedSelectedQuantity(cartEntity,
+        alreadySelectedQuantity + increasedQuantity);
   }
 }
