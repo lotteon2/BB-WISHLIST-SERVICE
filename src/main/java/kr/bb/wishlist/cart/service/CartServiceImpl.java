@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import kr.bb.wishlist.cart.dto.CartItemProductIdDto;
-import kr.bb.wishlist.cart.entity.CartCompositekey;
 import kr.bb.wishlist.cart.entity.CartEntity;
 import kr.bb.wishlist.cart.exception.CartDomainException;
 import kr.bb.wishlist.cart.mapper.CartMapper;
@@ -12,9 +11,11 @@ import kr.bb.wishlist.cart.repository.CartJpaRepository;
 import kr.bb.wishlist.cart.repository.ProductIdProjection;
 import kr.bb.wishlist.cart.util.CartCompkeyMakerUtil;
 import kr.bb.wishlist.cart.valueobject.AddCartItemStatus;
+import kr.bb.wishlist.cart.valueobject.CartCompkey;
 import kr.bb.wishlist.common.valueobject.ProductId;
 import kr.bb.wishlist.common.valueobject.UserId;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -22,14 +23,19 @@ import org.springframework.stereotype.Service;
 public class CartServiceImpl implements
     CartService<UserId, ProductId> {
 
+  private final UpdateCartItemSelectedQuantityProcessor updateCartItemSelectedQuantityProcessor;
   private final AddCartItemWhenCartItemIsAlreadyExist addCartItemStrategy;
   private final CartDeleteCartItemStrategy<UserId, ProductId> deleteCartItemStrategy;
   private final CartJpaRepository repository;
 
+
   @Override
   public CartItemProductIdDto getCartItem(UserId userId) {
-    List<ProductIdProjection> productIdProjections = repository.findAllByCartCompositekey_UserId(
+
+    List<CartEntity> cartEntityList = repository.findAllByCartCompositekey_UserId(
         userId.getValue());
+
+    List<ProductIdProjection> productIdProjections = filterProductIdList(cartEntityList);
 
     List<Long> productIdList = productIdProjections.stream()
         .map(ProductIdProjection::getProductId)
@@ -41,7 +47,7 @@ public class CartServiceImpl implements
 
   @Override
   public AddCartItemStatus addCartItem(UserId userId, ProductId productId, int selectedQuantity) {
-    addCartItemStrategy.addCartItem(userId,productId,selectedQuantity);
+    return addCartItemStrategy.addCartItem(userId, productId, selectedQuantity);
   }
 
   @Transactional
@@ -54,15 +60,20 @@ public class CartServiceImpl implements
 
   @Override
   public void updateCartItemSelectedQuantity(UserId userId, ProductId productId,
-      int increasedQuantity) {
+      int updatedSelectedQuantity, int stock) {
     CartEntity cartEntity = repository.findById(
-        CartCompkeyMakerUtil.cartEntityCompKey(userId, productId)).orElseThrow(() -> {
-      throw new CartDomainException("존재하지 않는 카트 상품입니다.");
-    });
+            CartCompkeyMakerUtil.cartEntityCompKey(userId, productId))
+        .orElseThrow(() -> {
+          throw new CartDomainException("존재 하지 않는 카트 상품입니다.");
+        });
+    updateCartItemSelectedQuantityProcessor.update(cartEntity, cartEntity.getSelectedQuantity(),
+        updatedSelectedQuantity, stock);
+  }
 
-    int alreadySelectedQuantity = cartEntity.getSelectedQuantity();
-
-    CartMapper.getCartEntityWithUpdatedSelectedQuantity(cartEntity,
-        alreadySelectedQuantity + increasedQuantity);
+  private List<ProductIdProjection> filterProductIdList(List<CartEntity> cartEntityList) {
+    return cartEntityList.stream()
+        .map(cartEntity -> ProductIdProjection.createFromLong(
+            cartEntity.getCartCompositekey().getProductId()))
+        .collect(Collectors.toList());
   }
 }

@@ -4,6 +4,6 @@ import kr.bb.wishlist.common.valueobject.ProductId;
 import org.springframework.stereotype.Component;
 
 @Component
-public interface CartItemStockRequest<PID extends ProductId> {
+public interface CartItemStockMessageRequest<PID extends ProductId> {
   public int request(PID pid);
 }

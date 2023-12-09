@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@SuperBuilder
+
 @NoArgsConstructor
 @Getter
 public class CartCompkey extends CompkeyId<UserId, ProductId> {

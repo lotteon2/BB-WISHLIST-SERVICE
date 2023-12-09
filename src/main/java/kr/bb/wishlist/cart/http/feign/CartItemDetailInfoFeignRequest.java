@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "get-cart-items-detail", value = "${service.product.domain}")
+@FeignClient(name = "get-cart-items-detail")
 public interface CartItemDetailInfoFeignRequest {
   @GetMapping("/products/carts")
   public ResponseEntity<GetUserCartItemsResponse> getCartItemDetails(@Valid @RequestBody CartItemProductIdDto productIdList);

@@ -3,12 +3,11 @@ package kr.bb.wishlist.cart.http.controller;
 import bloomingblooms.response.CommonResponse;
 import javax.validation.Valid;
 import kr.bb.wishlist.cart.dto.CartItemProductIdDto;
-import kr.bb.wishlist.cart.dto.DeleteCartItemListCommand;
 import kr.bb.wishlist.cart.dto.command.AddCartItemCommand;
 import kr.bb.wishlist.cart.dto.command.DeleteCartItemListCommand;
 import kr.bb.wishlist.cart.dto.command.UpdateCartItemCommand;
 import kr.bb.wishlist.cart.dto.response.GetUserCartItemsResponse;
-import kr.bb.wishlist.cart.http.controller.message.CartItemStockRequest;
+import kr.bb.wishlist.cart.http.controller.message.CartItemStockMessageRequest;
 import kr.bb.wishlist.cart.http.message.GetCartItemProductInfoMessageRequest;
 import kr.bb.wishlist.cart.service.CartService;
 import kr.bb.wishlist.cart.valueobject.AddCartItemStatus;
@@ -27,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CartRestController {
 
-  private final CartItemStockRequest cartItemStockRequest;
+  private final CartItemStockMessageRequest<ProductId> cartItemStockRequest;
   private final CartService<UserId, ProductId> cartService;
   private final GetCartItemProductInfoMessageRequest productInfoRequest;
 
@@ -56,14 +55,13 @@ public class CartRestController {
 
   @PutMapping("/carts/products/{productId}")
   public CommonResponse<String> updateCartItemSelectedQuantity(
-      @RequestHeader Long userId, @Valid @RequestBody UpdateCartItemCommand<ProductId> command,
+      @RequestHeader Long userId, @Valid @RequestBody UpdateCartItemCommand command,
       @PathVariable Long productId) {
-
-
+    int stock = cartItemStockRequest.request(new ProductId(productId));
+    cartService.updateCartItemSelectedQuantity(new UserId(userId), new ProductId(productId),
+        stock + command.getUpdatedQuantity(), stock);
+    return CommonResponse.success("카트 재고 업데이트 성공");
 
   }
 
-  ///api/wishlist/carts 상품 담기 POST
-  ///api/wishlist/carts/products 삭제
-  ///api/wishlist/carts/products/{productId} 수량 조절
 }

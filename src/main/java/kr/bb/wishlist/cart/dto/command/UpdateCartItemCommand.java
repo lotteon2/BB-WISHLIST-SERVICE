@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class UpdateCartItemCommand<ID extends ProductId> {
+public class UpdateCartItemCommand {
 
-  public ProductId productId;
+  public int updatedQuantity ;
 }
