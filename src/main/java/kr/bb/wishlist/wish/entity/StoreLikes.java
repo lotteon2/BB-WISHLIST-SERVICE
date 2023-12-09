@@ -1,9 +1,9 @@
-package kr.bb.wishlist.entity;
+package kr.bb.wishlist.wish.entity;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import kr.bb.wishlist.entity.compositekey.StoreLikesId;
+import kr.bb.wishlist.common.entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
