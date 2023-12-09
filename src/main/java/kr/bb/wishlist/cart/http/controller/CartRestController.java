@@ -2,8 +2,12 @@ package kr.bb.wishlist.cart.http.controller;
 
 import bloomingblooms.response.CommonResponse;
 import javax.validation.Valid;
+import kr.bb.wishlist.cart.dto.CartItemProductIdList;
+import kr.bb.wishlist.cart.dto.command.AddCartItemCommand;
 import kr.bb.wishlist.cart.dto.response.GetUserCartItemsResponse;
+import kr.bb.wishlist.cart.http.message.GetCartItemProductInfoMessageRequest;
 import kr.bb.wishlist.cart.service.CartService;
+import kr.bb.wishlist.common.valueobject.ProductId;
 import kr.bb.wishlist.common.valueobject.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,16 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class CartRestController {
 
   private final CartService<UserId> cartService;
+  private final GetCartItemProductInfoMessageRequest messageRequest;
 
   @GetMapping("/carts")
   public CommonResponse<GetUserCartItemsResponse> getUserCartProducts(
       @RequestHeader Long userId) {
-//    return CommonResponse.success(cartService.getCartItem(new UserId(userId)));
+
+    CartItemProductIdList productIdList = cartService.getCartItem(new UserId(userId));
+    return CommonResponse.success(messageRequest.request(productIdList));
   }
 
   @PostMapping("/carts")
   public CommonResponse<String> addCartItem(
-      @RequestHeader Long userId, @Valid @RequestBody AddCartItemCommand command) {
+      @RequestHeader Long userId, @Valid @RequestBody AddCartItemCommand<ProductId> command) {
 
   }
 

@@ -7,4 +7,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CartService<ID extends UserId> {
   public CartItemProductIdList getCartItem(ID userId);
+
 }

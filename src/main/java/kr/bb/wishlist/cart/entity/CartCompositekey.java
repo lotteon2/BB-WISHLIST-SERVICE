@@ -1,5 +1,20 @@
 package kr.bb.wishlist.cart.entity;
 
-public class CartCompositekey {
+import java.io.Serializable;
+import javax.persistence.Embeddable;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Embeddable
+public class CartCompositekey implements Serializable {
+
+  private static final long serialVersionUID = -189479558090736427L;
+  private Long userId;
+  private Long productId;
 
 }
