@@ -1,16 +1,15 @@
 package kr.bb.wishlist.common.valueobject;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-
-@NoArgsConstructor
 @SuperBuilder
-@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserId extends BaseId<Long> {
+
   public UserId(Long value) {
     super(value);
   }
-
 }

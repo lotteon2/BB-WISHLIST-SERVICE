@@ -2,8 +2,10 @@ package kr.bb.wishlist.cart.http.controller;
 
 import bloomingblooms.response.CommonResponse;
 import javax.validation.Valid;
-import kr.bb.wishlist.cart.dto.CartItemProductIdList;
+import kr.bb.wishlist.cart.dto.CartItemProductIdDto;
+import kr.bb.wishlist.cart.dto.DeleteCartItemListCommand;
 import kr.bb.wishlist.cart.dto.command.AddCartItemCommand;
+import kr.bb.wishlist.cart.dto.command.DeleteCartItemListCommand;
 import kr.bb.wishlist.cart.dto.response.GetUserCartItemsResponse;
 import kr.bb.wishlist.cart.http.message.GetCartItemProductInfoMessageRequest;
 import kr.bb.wishlist.cart.service.CartService;
@@ -22,37 +24,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CartRestController {
 
-  private final CartService<UserId> cartService;
+  private final CartService<UserId, ProductId> cartService;
   private final GetCartItemProductInfoMessageRequest messageRequest;
 
   @GetMapping("/carts")
   public CommonResponse<GetUserCartItemsResponse> getUserCartProducts(
       @RequestHeader Long userId) {
-
-    CartItemProductIdList productIdList = cartService.getCartItem(new UserId(userId));
+    CartItemProductIdDto productIdList = cartService.getCartItem(new UserId(userId));
     return CommonResponse.success(messageRequest.request(productIdList));
   }
 
   @PostMapping("/carts")
   public CommonResponse<String> addCartItem(
       @RequestHeader Long userId, @Valid @RequestBody AddCartItemCommand<ProductId> command) {
-
+    cartService.addCartItem(new UserId(userId), command.getProductId(),
+        command.getSelectedQuantity());
+    return CommonResponse.success("장바구니 상품 담기 성공");
   }
 
-  @PutMapping("/carts/products")
-  public CommonResponse<String> addCartItem(
-      @RequestHeader Long userId, @Valid @RequestBody DeleteProductListCommand command) {
-
-  }
 
   @PutMapping("/carts/products")
-  public CommonResponse<String> addCartItem(
+  public CommonResponse<String> deleteCartItmes(
       @RequestHeader Long userId, @Valid @RequestBody DeleteCartItemListCommand command) {
-
+    cartService.deleteCartItems(new UserId(userId), command.getProductIdList());
   }
 
   @PutMapping("/carts/products/{productId}")
-  public CommonResponse<String> addCartItem(
+  public CommonResponse<String> updateCartItemSelectedQuantity(
       @RequestHeader Long userId, @Valid @RequestBody UpdatepCartItemCommand command,
       @PathVariable Long productId) {
 

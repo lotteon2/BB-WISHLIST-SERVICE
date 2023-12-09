@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class CartItemProductIdList {
+public class CartItemProductIdDto {
   @NotNull
   List<Long> productIdList;
 }
