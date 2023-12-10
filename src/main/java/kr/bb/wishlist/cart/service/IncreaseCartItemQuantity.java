@@ -1,7 +1,6 @@
 package kr.bb.wishlist.cart.service;
 
 import java.util.Optional;
-import kr.bb.wishlist.cart.entity.CartCompositekey;
 import kr.bb.wishlist.cart.entity.CartEntity;
 import kr.bb.wishlist.cart.mapper.CartMapper;
 import kr.bb.wishlist.cart.repository.CartJpaRepository;

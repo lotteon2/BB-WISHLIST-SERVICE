@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Embeddable
-public class CartCompositekey implements Serializable {
+public class CartCompositeKey implements Serializable {
 
   private static final long serialVersionUID = -189479558090736427L;
   private Long userId;

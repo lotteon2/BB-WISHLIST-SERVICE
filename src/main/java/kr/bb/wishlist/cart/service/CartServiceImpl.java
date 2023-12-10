@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import kr.bb.wishlist.cart.dto.CartItemProductIdDto;
+import kr.bb.wishlist.cart.entity.CartCompositeKey;
 import kr.bb.wishlist.cart.entity.CartEntity;
 import kr.bb.wishlist.cart.exception.CartDomainException;
 import kr.bb.wishlist.cart.mapper.CartMapper;
@@ -25,7 +26,6 @@ public class CartServiceImpl implements
 
   private final UpdateCartItemSelectedQuantityProcessor updateCartItemSelectedQuantityProcessor;
   private final AddCartItemWhenCartItemIsAlreadyExist addCartItemStrategy;
-  private final CartDeleteCartItemStrategy<UserId, ProductId> deleteCartItemStrategy;
   private final CartJpaRepository repository;
 
 
@@ -54,7 +54,7 @@ public class CartServiceImpl implements
   @Override
   public void deleteCartItems(UserId userId, List<ProductId> productIdList) {
     for (ProductId productId : productIdList) {
-      deleteCartItemStrategy.delete(userId, productId);
+      repository.deleteById(CartCompkeyMakerUtil.cartEntityCompKey(userId,productId));
     }
   }
 

@@ -6,6 +6,5 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface GetCartItemProductInfoMessageRequest {
-
   public GetUserCartItemsResponse request(CartItemProductIdDto idList);
 }

@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class CartEntity {
   @EmbeddedId
-  private CartCompositekey cartCompositekey;
+  private CartCompositeKey cartCompositekey;
   private int selectedQuantity;
 }
