@@ -1,31 +1,28 @@
 package kr.bb.wishlist.cart.repository;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
 
 import java.util.List;
 import kr.bb.wishlist.cart.entity.CartCompositeKey;
 import kr.bb.wishlist.cart.entity.CartEntity;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+
 @DataJpaTest
-public class CartRepositoryTest {
+class CartRepositoryTest {
 
   @Autowired
-  CartJpaRepository repository;
+  private CartJpaRepository repository;
 
   @Test
   void GetCartEntity_WhenCartEntityExistByCompositeKey_GetListOfCartEntity() {
 
-    CartCompositeKey cartCompositekey = new CartCompositeKey(anyLong(), anyLong());
+    CartCompositeKey cartCompositekey = new CartCompositeKey(1L,1L);
     CartEntity cartEntity = CartEntity.builder().cartCompositekey(cartCompositekey)
         .selectedQuantity(
-            ArgumentMatchers.anyInt()).build();
+            1).build();
 
     repository.save(cartEntity);
 
@@ -40,7 +37,7 @@ public class CartRepositoryTest {
   void GetCartEntity_WhenCartEntityIsNotExistByCompositeKey_GetSize0CartEntityList() {
 
     List<CartEntity> cartEntityList = repository.findAllByCartCompositekey_UserId(
-        anyLong());
+        1L);
 
     assertTrue(cartEntityList.size() == 0);
   }

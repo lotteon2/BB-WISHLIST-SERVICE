@@ -28,9 +28,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class DeleteCartItemServiceTest {
 
   @Mock
-  CartJpaRepository repository;
+  private CartJpaRepository repository;
   @InjectMocks
-  CartServiceImpl cartService;
+  private CartServiceImpl cartService;
 
   @DisplayName("카트에 상품이 존재할 때 상품 삭제")
   @Test

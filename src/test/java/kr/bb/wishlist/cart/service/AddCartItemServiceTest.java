@@ -24,9 +24,9 @@ class AddCartItemServiceTest {
 
 
  @Mock
- CartJpaRepository repository;
+ private CartJpaRepository repository;
  @InjectMocks
- IncreaseCartItemQuantity addCartService;
+ private IncreaseCartItemQuantity addCartService;
 
 
  @DisplayName("이미 존재하는 카트 상품 개수 추가")

@@ -24,13 +24,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class UpdateCartItemServiceTest {
 
   @Mock
-  CartJpaRepository repository;
+  private CartJpaRepository repository;
   @InjectMocks
-  UpdateCartItemSelectedQuantityProcessor processor;
+  private UpdateCartItemSelectedQuantityProcessor processor;
   @Mock
-  IncreaseCartItemSelectedQuantityStrategy increaseCartItemSelectedQuantityStrategy;
+  private IncreaseCartItemSelectedQuantityStrategy increaseCartItemSelectedQuantityStrategy;
   @Mock
-  DecreaseCartItemSelectedQuantityStrategy decreaseCartItemSelectedQuantityStrategy;
+  private DecreaseCartItemSelectedQuantityStrategy decreaseCartItemSelectedQuantityStrategy;
 
 
   @DisplayName("1개 미만으로 수량을 조절할 때 Throw CartDomainException")

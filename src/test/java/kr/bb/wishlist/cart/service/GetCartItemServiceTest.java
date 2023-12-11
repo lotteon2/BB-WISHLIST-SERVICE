@@ -28,12 +28,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class GetCartItemServiceTest {
 
   @Mock
-  ProductIdProjection productIdProjectionMock;
+  private ProductIdProjection productIdProjectionMock;
 
   @InjectMocks
-  CartServiceImpl cartService;
+  private CartServiceImpl cartService;
   @Mock
-  CartJpaRepository repository;
+  private CartJpaRepository repository;
 
   @Test
   void GetCartItem_WhenThereIsProduct_GetCartItemInfoWithDto() {
