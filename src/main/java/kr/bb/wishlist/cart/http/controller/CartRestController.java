@@ -59,7 +59,7 @@ public class CartRestController {
       @PathVariable Long productId) {
     int stock = cartItemStockRequest.request(new ProductId(productId));
     cartService.updateCartItemSelectedQuantity(new UserId(userId), new ProductId(productId),
-        stock + command.getUpdatedQuantity(), stock);
+        command.getUpdatedQuantity(), stock);
     return CommonResponse.success("카트 재고 업데이트 성공");
 
   }

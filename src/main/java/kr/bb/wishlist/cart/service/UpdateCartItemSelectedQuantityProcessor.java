@@ -21,7 +21,7 @@ public class UpdateCartItemSelectedQuantityProcessor {
       int totalUpdateSelectedQuantity, int stock) {
     if (totalUpdateSelectedQuantity < 1) {
       throw new CartDomainException("1개 이하로는 수량을 조절할 수 없습니다.");
-    } else if (totalUpdateSelectedQuantity <= stock) {
+    } else if (totalUpdateSelectedQuantity >= stock) {
       updateAsStockWhenStockIsNotEfficient(cartEntity, stock);
     } else if (totalUpdateSelectedQuantity < currentSelectedQuantity) {
       decrease(cartEntity, totalUpdateSelectedQuantity, stock);

@@ -1,22 +1,20 @@
 package kr.bb.wishlist.cart.service;
 
+
+
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import kr.bb.wishlist.cart.dto.CartItemProductIdDto;
-import kr.bb.wishlist.cart.entity.CartCompositeKey;
 import kr.bb.wishlist.cart.entity.CartEntity;
 import kr.bb.wishlist.cart.exception.CartDomainException;
-import kr.bb.wishlist.cart.mapper.CartMapper;
 import kr.bb.wishlist.cart.repository.CartJpaRepository;
 import kr.bb.wishlist.cart.repository.ProductIdProjection;
 import kr.bb.wishlist.cart.util.CartCompkeyMakerUtil;
 import kr.bb.wishlist.cart.valueobject.AddCartItemStatus;
-import kr.bb.wishlist.cart.valueobject.CartCompkey;
 import kr.bb.wishlist.common.valueobject.ProductId;
 import kr.bb.wishlist.common.valueobject.UserId;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
