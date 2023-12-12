@@ -12,7 +12,7 @@ public class CartProductItemInfo {
 
   private Long storeId;
   private String storeName;
-  private int deliveryCost;
+  private int deliveryMinCost;
   private List<ProductInfoDto> productInfoList;
 
 }

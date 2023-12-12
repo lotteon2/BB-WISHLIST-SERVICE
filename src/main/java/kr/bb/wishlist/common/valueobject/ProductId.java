@@ -7,8 +7,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @Getter
-public class ProductId extends BaseId<Long> {
-  public ProductId(Long value) {
+public class ProductId extends BaseId<String> {
+  public ProductId(String value) {
     super(value);
   }
 }

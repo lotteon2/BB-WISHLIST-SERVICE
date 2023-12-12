@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Getter
 public class CartItemProductIdDto {
   @NotNull
-  List<Long> productIdList;
+  List<String> productIdList;
 }
