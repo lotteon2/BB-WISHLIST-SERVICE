@@ -3,12 +3,11 @@ package kr.bb.wishlist.wish.service;
 import java.util.List;
 import kr.bb.wishlist.common.valueobject.ProductId;
 import kr.bb.wishlist.common.valueobject.UserId;
-import kr.bb.wishlist.wish.valueobject.LikeStatus;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface LikesProductService {
+public interface LikesProductService<ID extends ProductId> {
 
-  public void likesProduct(List<ProductId> productIdList, UserId userId);
-  public List<ProductId> getProductLikes(UserId userId);
+  public void likesProduct(List<ID> productIdList, UserId userId);
+  public List<ID> getProductLikes(UserId userId);
 }
