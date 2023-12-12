@@ -33,7 +33,7 @@ class AddCartItemServiceTest {
  @Test
  void AddCartItem_WhenCartItemIsAlreadyExistedInCart_StatusAlreadyExist() {
 
-  CartEntity existingCartEntity = new CartEntity(new CartCompositeKey(1L, 1L), 2);
+  CartEntity existingCartEntity = new CartEntity(new CartCompositeKey(1L, "1"), 2);
   UserId userId = new UserId(existingCartEntity.getCartCompositekey().getUserId());
   ProductId productId = new ProductId(existingCartEntity.getCartCompositekey().getProductId());
 
@@ -50,7 +50,7 @@ class AddCartItemServiceTest {
  @DisplayName("카트에 존재하지 않는 상품 추가")
  @Test
  void AddCartItem_WhenCartItemIsNotExistedInCart_StatusNewCartItem() {
-  CartEntity newCartEntity = new CartEntity(new CartCompositeKey(1L, 1L), 2);
+  CartEntity newCartEntity = new CartEntity(new CartCompositeKey(1L, "1"), 2);
   UserId userId = new UserId(newCartEntity.getCartCompositekey().getUserId());
   ProductId productId = new ProductId(newCartEntity.getCartCompositekey().getProductId());
 

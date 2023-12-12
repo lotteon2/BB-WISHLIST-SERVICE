@@ -2,9 +2,9 @@ package kr.bb.wishlist.cart.repository;
 
 public interface ProductIdProjection {
 
-    Long getProductId();
+    String getProductId();
 
-    static ProductIdProjection createFromLong(Long productId) {
+    static ProductIdProjection createFromLong(String productId) {
         return () -> productId;
     }
 }

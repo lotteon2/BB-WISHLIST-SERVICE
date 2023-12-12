@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface ProductStockFeignRequest {
 
   @GetMapping("/products/{productId}")
-  public ResponseEntity<Integer> getProductStock(@PathVariable Long productId);
+  public ResponseEntity<Integer> getProductStock(@PathVariable String productId);
 
 }

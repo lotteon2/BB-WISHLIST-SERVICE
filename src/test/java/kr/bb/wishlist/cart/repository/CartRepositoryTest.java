@@ -19,7 +19,7 @@ class CartRepositoryTest {
   @Test
   void GetCartEntity_WhenCartEntityExistByCompositeKey_GetListOfCartEntity() {
 
-    CartCompositeKey cartCompositekey = new CartCompositeKey(1L,1L);
+    CartCompositeKey cartCompositekey = new CartCompositeKey(1L,"1");
     CartEntity cartEntity = CartEntity.builder().cartCompositekey(cartCompositekey)
         .selectedQuantity(
             1).build();

@@ -47,7 +47,7 @@ public class CartRestController {
 
 
   @PutMapping("/carts/products")
-  public CommonResponse<String> deleteCartItmes(
+  public CommonResponse<String> deleteCartItems(
       @RequestHeader Long userId, @Valid @RequestBody DeleteCartItemListCommand command) {
     cartService.deleteCartItems(new UserId(userId), command.getProductIdList());
     return CommonResponse.success("장바구니 상품 삭제 성공");
@@ -56,7 +56,7 @@ public class CartRestController {
   @PutMapping("/carts/products/{productId}")
   public CommonResponse<String> updateCartItemSelectedQuantity(
       @RequestHeader Long userId, @Valid @RequestBody UpdateCartItemCommand command,
-      @PathVariable Long productId) {
+      @PathVariable String productId) {
     int stock = cartItemStockRequest.request(new ProductId(productId));
     cartService.updateCartItemSelectedQuantity(new UserId(userId), new ProductId(productId),
         command.getUpdatedQuantity(), stock);
