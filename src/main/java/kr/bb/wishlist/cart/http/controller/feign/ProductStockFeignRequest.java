@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "get-product-stock",url = "${service.product.domain}")
 public interface ProductStockFeignRequest {
 
-  @GetMapping("/products/{productId}")
+  @GetMapping("/products/{productId}/carts")
   public ResponseEntity<Integer> getProductStock(@PathVariable String productId);
 
 }

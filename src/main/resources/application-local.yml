@@ -19,3 +19,5 @@ spring:
 service:
   product:
     domain: http://localhost:5000
+  store:
+    domain: http://localhost:4000
