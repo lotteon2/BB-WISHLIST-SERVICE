@@ -35,7 +35,7 @@ public class CartServiceImpl implements
 
     List<ProductIdProjection> productIdProjections = filterProductIdList(cartEntityList);
 
-    List<String> productIdList = productIdProjections.stream()
+    List<ProductId> productIdList = productIdProjections.stream()
         .map(ProductIdProjection::getProductId)
         .collect(Collectors.toList());
 
@@ -71,7 +71,7 @@ public class CartServiceImpl implements
   private List<ProductIdProjection> filterProductIdList(List<CartEntity> cartEntityList) {
     return cartEntityList.stream()
         .map(cartEntity -> ProductIdProjection.createFromLong(
-         cartEntity.getCartCompositekey().getProductId()))
+            new ProductId(cartEntity.getCartCompositekey().getProductId())))
         .collect(Collectors.toList());
   }
 }

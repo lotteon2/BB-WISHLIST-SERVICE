@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LikesRestController {
 
-  private final LikedStoreInfoRequest storeInfoRequest;
-  private final LikedProductInfoRequest productInfoRequest;
-  private final LikesStoreService likesStoreService;
-  private final LikesProductService likesProductService;
+  private final LikedStoreInfoRequest<StoreId> storeInfoRequest;
+  private final LikedProductInfoRequest<ProductId> productInfoRequest;
+  private final LikesStoreService<StoreId> likesStoreService;
+  private final LikesProductService<ProductId> likesProductService;
 
 
   @GetMapping("/likes/product")
@@ -47,8 +47,8 @@ public class LikesRestController {
 
   @PutMapping("/likes/product")
   public CommonResponse<String> onOffProductLikes(
-      @RequestHeader Long userId, @RequestBody List<ProductId> ProductIdList) {
-    likesProductService.likesProduct(ProductIdList, new UserId(userId));
+      @RequestHeader Long userId, @RequestBody List<ProductId> productIdList) {
+    likesProductService.likesProduct(productIdList, new UserId(userId));
     return CommonResponse.success("찜 취소, 혹은 찜 성공");
   }
 

@@ -6,6 +6,10 @@ import kr.bb.wishlist.common.valueobject.UserId;
 
 public class CartCompkeyMakerUtil {
 
+
+  private CartCompkeyMakerUtil(){
+
+  }
   public static CartCompositeKey cartEntityCompKey(UserId userId, ProductId productId){
     return new CartCompositeKey(userId.getValue(),productId.getValue());
   }

@@ -6,6 +6,6 @@ import kr.bb.wishlist.wish.dto.response.LikedProductInfoResponse;
 import org.springframework.stereotype.Component;
 
 @Component
-public interface LikedProductInfoRequest {
-  public LikedProductInfoResponse request(List<ProductId>productIdList);
+public interface LikedProductInfoRequest<ID extends ProductId> {
+  public LikedProductInfoResponse request(List<ID>productIdList);
 }

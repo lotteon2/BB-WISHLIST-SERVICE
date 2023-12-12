@@ -1,12 +1,14 @@
 package kr.bb.wishlist.cart.repository;
 
 
+import kr.bb.wishlist.common.valueobject.ProductId;
+
 @FunctionalInterface
 public interface ProductIdProjection {
 
-    String getProductId();
+    ProductId getProductId();
 
-    static ProductIdProjection createFromLong(String productId) {
+    static ProductIdProjection createFromLong(ProductId productId) {
         return () -> productId;
     }
 }

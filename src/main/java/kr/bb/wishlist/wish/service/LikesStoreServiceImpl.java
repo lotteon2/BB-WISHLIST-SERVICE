@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class LikesStoreServiceImpl implements
-    LikesStoreService {
+    LikesStoreService<StoreId> {
 
   private final StoreLikesStrategy<StoreId> likesStrategy;
   private final LikesStoreJpaRepository repository;
@@ -28,7 +28,7 @@ public class LikesStoreServiceImpl implements
   }
 
   @Override
-  public List<Long> getStoreIdLikes(UserId userId) {
+  public List<StoreId> getStoreIdLikes(UserId userId) {
 
     List<LikesStoreEntity> likesStoreEntityList = repository.findAllByStoreLikesCompositeKey_UserId(
         userId.getValue());
@@ -43,8 +43,8 @@ public class LikesStoreServiceImpl implements
 
   private List<StoreIdProjection> getStoreIdProjection(List<LikesStoreEntity> list) {
     return list.stream().map(
-        s -> StoreIdProjection.createStoreId(
-            s.getStoreLikesCompositeKey().getStoreId())
+        s -> StoreIdProjection.createStoreId(new StoreId(s.getStoreLikesCompositeKey().getStoreId())
+        )
     ).collect(Collectors.toList());
   }
 }
