@@ -16,3 +16,5 @@ spring:
 service:
   product:
     domain: ${service.coupon.domain}
+  store:
+    domain : ${service.store.domain}

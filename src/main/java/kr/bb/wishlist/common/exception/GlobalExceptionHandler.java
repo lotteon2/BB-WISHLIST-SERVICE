@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import kr.bb.wishlist.cart.exception.CartDomainException;
-import kr.bb.wishlist.wish.exception.WishDomainException;
+import kr.bb.wishlist.wish.exception.LikesDomainException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,8 +40,8 @@ public class GlobalExceptionHandler {
     List<String> errors = Collections.singletonList(ex.getMessage());
     return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.BAD_REQUEST);
   }
-  @ExceptionHandler(WishDomainException.class)
-  public ResponseEntity<Map<String, List<String>>> storeManagerException(WishDomainException
+  @ExceptionHandler(LikesDomainException.class)
+  public ResponseEntity<Map<String, List<String>>> storeManagerException(LikesDomainException
        ex) {
     List<String> errors = Collections.singletonList(ex.getMessage());
     return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.BAD_REQUEST);
