@@ -1,4 +1,4 @@
-package kr.bb.wishlist.entity;
+package kr.bb.wishlist.common.entity;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;

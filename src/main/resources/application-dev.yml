@@ -5,12 +5,14 @@ spring:
     name: wishlist-service
   config:
     activate:
-      on-profile: local, dev, local
+      on-profile: dev
     import: optional:configserver:http://localhost:8888
-management:
-  endpoints:
-    web:
-      exposure:
-        include:
-          - "refresh"
-          - "bus-refresh"
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+
+service:
+  product:
+    domain: ${service.coupon.domain
