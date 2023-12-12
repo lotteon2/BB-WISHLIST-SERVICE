@@ -1,6 +1,7 @@
 package kr.bb.wishlist.wish.entity;
 
 import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Builder
+@Entity
 public class LikesEntity {
   @EmbeddedId
   private ProductLikesCompositeKey likesCompositeKey;

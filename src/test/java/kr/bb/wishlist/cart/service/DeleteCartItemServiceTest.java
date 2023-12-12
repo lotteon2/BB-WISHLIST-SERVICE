@@ -35,7 +35,7 @@ public class DeleteCartItemServiceTest {
   @DisplayName("카트에 상품이 존재할 때 상품 삭제")
   @Test
   void DeleteCartItem_WhenCartItemExist_deleteByIdIsOccurredAsSizeOfList() {
-    List<ProductId> productIdList = List.of(new ProductId(1L));
+    List<ProductId> productIdList = List.of(new ProductId("1"));
 
     cartService.deleteCartItems(
         new UserId(anyLong()), productIdList);
