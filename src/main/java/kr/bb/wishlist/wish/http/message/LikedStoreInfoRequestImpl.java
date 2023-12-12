@@ -2,17 +2,20 @@ package kr.bb.wishlist.wish.http.message;
 
 import java.util.List;
 import kr.bb.wishlist.common.valueobject.StoreId;
+import kr.bb.wishlist.wish.dto.message.StoreIdListDto;
 import kr.bb.wishlist.wish.dto.response.LikedStoreInfoResponse;
 import kr.bb.wishlist.wish.http.feign.LikedStoreInfoFeignRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+@RequiredArgsConstructor
 @Component
 public class LikedStoreInfoRequestImpl implements
     LikedStoreInfoRequest {
 
   private final LikedStoreInfoFeignRequest feignRequest;
   @Override
-  public LikedStoreInfoResponse request(List<Long> storeId) {
-    return null;
+  public LikedStoreInfoResponse request(List<Long> storeIdList) {
+    return feignRequest.getLikedStoreInfo(new StoreIdListDto(storeIdList)).getBody();
   }
 }
