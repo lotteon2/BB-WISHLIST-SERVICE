@@ -5,10 +5,11 @@ spring:
   config:
     activate:
       on-profile: local
+    import: optional:configserver:http://config-service:8888
   datasource:
-    url: jdbc:mysql://localhost:3306/bb-wishlist-service?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/develop?serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8
     username: root
-    password: k1651227
+    password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
     jpa:
       hibernate:
