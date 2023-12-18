@@ -48,6 +48,8 @@ dependencies {
     testImplementation 'com.h2database:h2:2.1.214'
     implementation "org.springframework.cloud:spring-cloud-starter-bus-kafka"
     implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+
 }
 
 dependencyManagement {

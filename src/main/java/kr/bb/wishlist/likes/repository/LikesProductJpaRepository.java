@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface LikesProductJpaRepository extends JpaRepository<ProductLikesEntity, ProductLikesCompositeKey> {
 
-    @Query("SELECT pl FROM ProductLikesEntity pl WHERE pl.likesCompositeKey = :userId ORDER BY pl.updatedAt DESC")
-    public List<ProductLikesEntity> findAllByLikesCompositeKey_UserId(Long userId);
+    @Query("SELECT pl FROM ProductLikesEntity pl WHERE pl.likesCompositeKey.userId = :userId and pl.isLiked = true ORDER BY pl.updatedAt DESC")
+    public List<ProductLikesEntity> findAllByLikesCompositeKey_UserIdAndAndIsLikedTrue(Long userId);
 }

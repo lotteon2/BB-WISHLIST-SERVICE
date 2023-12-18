@@ -29,7 +29,7 @@ public class LikesProductServiceImpl implements
 
   @Override
   public List<ProductId> getProductLikes(UserId userId) {
-    List<ProductLikesEntity> productLikesEntityList = repository.findAllByLikesCompositeKey_UserId(
+    List<ProductLikesEntity> productLikesEntityList = repository.findAllByLikesCompositeKey_UserIdAndAndIsLikedTrue(
         userId.getValue());
 
     List<ProductIdProjection> productIdProjectionList = getProjection(productLikesEntityList);
