@@ -3,18 +3,20 @@ server:
 spring:
   application:
     name: wishlist-service
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: http://localhost:9092
   config:
     activate:
       on-profile: dev
-    import: optional:configserver:http://localhost:8888
+    import: optional:configserver:http://config-service:8888
 
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: none
-
-service:
-  product:
-    domain: ${service.coupon.domain}
-  store:
-    domain : ${service.store.domain}
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "refresh"
+          - "bus-refresh"

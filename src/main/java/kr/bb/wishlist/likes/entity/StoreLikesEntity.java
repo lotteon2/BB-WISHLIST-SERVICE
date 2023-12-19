@@ -1,4 +1,4 @@
-package kr.bb.wishlist.cart.entity;
+package kr.bb.wishlist.likes.entity;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -8,13 +8,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 @Builder
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-public class CartEntity extends BaseEntity {
+public class StoreLikesEntity extends BaseEntity {
+
   @EmbeddedId
-  private CartCompositeKey cartCompositekey;
-  private int selectedQuantity;
+  private StoreLikesCompositeKey storeLikesCompositeKey;
+  private Boolean isLiked;
+
 }
