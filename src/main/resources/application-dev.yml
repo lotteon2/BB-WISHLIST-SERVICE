@@ -3,6 +3,11 @@ server:
 spring:
   application:
     name: wishlist-service
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: http://localhost:9092
   config:
     activate:
       on-profile: dev
@@ -13,8 +18,3 @@ spring:
     hibernate:
       ddl-auto: none
 
-service:
-  product:
-    domain: ${service.coupon.domain}
-  store:
-    domain : ${service.store.domain}
