@@ -11,10 +11,12 @@ spring:
   config:
     activate:
       on-profile: dev
-    import: optional:configserver:http://localhost:8888
+    import: optional:configserver:http://config-service:8888
 
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: none
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "refresh"
+          - "bus-refresh"

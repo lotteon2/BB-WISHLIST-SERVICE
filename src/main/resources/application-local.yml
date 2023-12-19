@@ -12,18 +12,7 @@ spring:
   config:
     activate:
       on-profile: local
-    import: optional:configserver:http://config-service:8888
-  datasource:
-    url: jdbc:mysql://localhost:3306/develop?serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: none
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    import: optional:configserver:http://localhost:8888
 
 
 management:
