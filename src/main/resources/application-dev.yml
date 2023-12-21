@@ -3,11 +3,6 @@ server:
 spring:
   application:
     name: wishlist-service
-  cloud:
-    stream:
-      kafka:
-        binder:
-          brokers: http://localhost:9092
   config:
     activate:
       on-profile: dev
