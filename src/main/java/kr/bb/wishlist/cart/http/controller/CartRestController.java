@@ -2,7 +2,6 @@ package kr.bb.wishlist.cart.http.controller;
 
 import bloomingblooms.response.CommonResponse;
 import javax.validation.Valid;
-import kr.bb.wishlist.cart.dto.CartItemProductIdDto;
 import kr.bb.wishlist.cart.dto.command.AddCartItemCommand;
 import kr.bb.wishlist.cart.dto.command.DeleteCartItemListCommand;
 import kr.bb.wishlist.cart.dto.command.UpdateCartItemCommand;
@@ -11,7 +10,9 @@ import kr.bb.wishlist.cart.http.message.GetCartItemProductInfoMessageRequest;
 import kr.bb.wishlist.cart.service.CartService;
 import kr.bb.wishlist.cart.valueobject.AddCartItemStatus;
 import kr.bb.wishlist.common.valueobject.ProductId;
+import kr.bb.wishlist.common.valueobject.StoreId;
 import kr.bb.wishlist.common.valueobject.UserId;
+import kr.bb.wishlist.likes.http.feign.handler.FeignRequestHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,13 +28,14 @@ public class CartRestController {
 
   private final CartService<UserId, ProductId> cartService;
   private final GetCartItemProductInfoMessageRequest productInfoRequest;
-
+  private final FeignRequestHandler<UserId, ProductId, StoreId> feignRequestHandler;
 
   @GetMapping("/carts")
   public CommonResponse<GetUserCartItemsResponse> getUserCartProducts(
       @RequestHeader Long userId) {
-    CartItemProductIdDto productIdList = cartService.getCartItem(new UserId(userId));
-    return CommonResponse.success(productInfoRequest.request(productIdList));
+
+    return CommonResponse.success(productInfoRequest.request(
+        feignRequestHandler.getUserLikesProductIdAndSelectedQuantity(new UserId(userId))));
   }
 
   @PostMapping("/carts")

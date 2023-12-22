@@ -16,6 +16,6 @@ public class LikedStoreInfoRequestImpl implements
   private final LikedStoreInfoFeignRequest feignRequest;
   @Override
   public LikedStoreInfoResponse request(List<StoreId> storeIdList) {
-    return feignRequest.getLikedStoreInfo(new StoreIdListDto(storeIdList)).getBody();
+    return feignRequest.getLikedStoreInfo(new StoreIdListDto(storeIdList)).getData();
   }
 }

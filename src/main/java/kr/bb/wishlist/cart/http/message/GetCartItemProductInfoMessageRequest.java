@@ -1,10 +1,10 @@
 package kr.bb.wishlist.cart.http.message;
 
-import kr.bb.wishlist.cart.dto.CartItemProductIdDto;
+import java.util.Map;
 import kr.bb.wishlist.cart.dto.response.GetUserCartItemsResponse;
 import org.springframework.stereotype.Component;
 
 @Component
 public interface GetCartItemProductInfoMessageRequest {
-  public GetUserCartItemsResponse request(CartItemProductIdDto idList);
+  public GetUserCartItemsResponse request(Map<String,Integer> productIdWithSelectedQuantity);
 }

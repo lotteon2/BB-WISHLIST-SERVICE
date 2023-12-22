@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CartServiceImpl implements
     CartService<UserId, ProductId> {
-
   private final UpdateCartItemSelectedQuantityProcessor updateCartItemSelectedQuantityProcessor;
   private final AddCartItemWhenCartItemIsAlreadyExist addCartItemStrategy;
   private final CartJpaRepository repository;
