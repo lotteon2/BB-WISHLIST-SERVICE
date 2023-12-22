@@ -1,8 +1,8 @@
 package kr.bb.wishlist.likes.http.feign;
 
+import bloomingblooms.domain.wishlist.likes.LikedProductInfoResponse;
 import bloomingblooms.response.CommonResponse;
 import java.util.List;
-import kr.bb.wishlist.likes.dto.response.LikedProductInfoResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

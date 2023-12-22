@@ -1,7 +1,7 @@
 package kr.bb.wishlist.cart.http.message;
 
+import bloomingblooms.domain.wishlist.cart.GetUserCartItemsResponse;
 import java.util.Map;
-import kr.bb.wishlist.cart.dto.response.GetUserCartItemsResponse;
 import org.springframework.stereotype.Component;
 
 @Component

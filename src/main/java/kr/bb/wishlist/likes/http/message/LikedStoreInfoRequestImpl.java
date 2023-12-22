@@ -1,9 +1,9 @@
 package kr.bb.wishlist.likes.http.message;
 
+import bloomingblooms.domain.wishlist.likes.LikedStoreInfoResponse;
 import java.util.List;
 import kr.bb.wishlist.common.valueobject.StoreId;
 import kr.bb.wishlist.likes.dto.message.StoreIdListDto;
-import kr.bb.wishlist.likes.dto.response.LikedStoreInfoResponse;
 import kr.bb.wishlist.likes.http.feign.LikedStoreInfoFeignRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

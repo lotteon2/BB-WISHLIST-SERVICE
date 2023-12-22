@@ -1,12 +1,12 @@
 package kr.bb.wishlist.likes.http.controller;
 
+import bloomingblooms.domain.wishlist.likes.LikedProductInfoResponse;
+import bloomingblooms.domain.wishlist.likes.LikedStoreInfoResponse;
 import bloomingblooms.response.CommonResponse;
 import java.util.List;
 import kr.bb.wishlist.common.valueobject.ProductId;
 import kr.bb.wishlist.common.valueobject.StoreId;
 import kr.bb.wishlist.common.valueobject.UserId;
-import kr.bb.wishlist.likes.dto.response.LikedProductInfoResponse;
-import kr.bb.wishlist.likes.dto.response.LikedStoreInfoResponse;
 import kr.bb.wishlist.likes.http.message.LikedProductInfoRequest;
 import kr.bb.wishlist.likes.http.message.LikedStoreInfoRequest;
 import kr.bb.wishlist.likes.service.LikesStoreService;

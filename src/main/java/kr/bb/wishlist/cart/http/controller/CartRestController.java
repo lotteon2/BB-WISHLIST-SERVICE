@@ -1,11 +1,11 @@
 package kr.bb.wishlist.cart.http.controller;
 
+import bloomingblooms.domain.wishlist.cart.GetUserCartItemsResponse;
 import bloomingblooms.response.CommonResponse;
 import javax.validation.Valid;
 import kr.bb.wishlist.cart.dto.command.AddCartItemCommand;
 import kr.bb.wishlist.cart.dto.command.DeleteCartItemListCommand;
 import kr.bb.wishlist.cart.dto.command.UpdateCartItemCommand;
-import kr.bb.wishlist.cart.dto.response.GetUserCartItemsResponse;
 import kr.bb.wishlist.cart.http.message.GetCartItemProductInfoMessageRequest;
 import kr.bb.wishlist.cart.service.CartService;
 import kr.bb.wishlist.cart.valueobject.AddCartItemStatus;
