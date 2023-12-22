@@ -43,7 +43,7 @@ public class CartServiceImpl implements
   }
 
   @Override
-  public AddCartItemStatus addCartItem(UserId userId, ProductId productId, int selectedQuantity) {
+  public AddCartItemStatus addCartItem(UserId userId, ProductId productId, Long selectedQuantity) {
     return addCartItemStrategy.addCartItem(userId, productId, selectedQuantity);
   }
 
@@ -56,8 +56,7 @@ public class CartServiceImpl implements
   }
 
   @Override
-  public void updateCartItemSelectedQuantity(UserId userId, ProductId productId,
-      int updatedSelectedQuantity) {
+  public void updateCartItemSelectedQuantity(UserId userId, ProductId productId,Long updatedSelectedQuantity) {
     CartEntity cartEntity = repository.findById(
             CartCompkeyMakerUtil.cartEntityCompKey(userId, productId))
         .orElseThrow(() -> {

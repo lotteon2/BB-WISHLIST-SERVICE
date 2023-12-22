@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @Getter
 public class AddCartItemCommand<ID extends ProductId> {
   private ID productId;
-  private int selectedQuantity;
+  private Long selectedQuantity;
 }

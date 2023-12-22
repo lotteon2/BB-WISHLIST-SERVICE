@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class UpdateCartItemSelectedQuantityProcessor {
-
-  private final IncreaseCartItemSelectedQuantityStrategy increaseCartItemSelectedQuantityStrategy;
+  private final IncreaseCartItemSelectedQuantityStrategy increaseCartItemSelectedQuantityStrategy; {
+  };
   private final DecreaseCartItemSelectedQuantityStrategy decreaseCartItemSelectedQuantityStrategy;
 
   @Transactional
-  public void update(CartEntity cartEntity, int currentSelectedQuantity,
-      int totalUpdateSelectedQuantity) {
+  public void update(CartEntity cartEntity, Long currentSelectedQuantity,
+      Long totalUpdateSelectedQuantity) {
     if (totalUpdateSelectedQuantity < 1) {
       throw new CartDomainException("1개 이하로는 수량을 조절할 수 없습니다.");
     }  else if (totalUpdateSelectedQuantity < currentSelectedQuantity) {
@@ -26,14 +26,14 @@ public class UpdateCartItemSelectedQuantityProcessor {
   }
 
   private void decrease(CartEntity cartEntity,
-      int totalUpdateSelectedQuantity) {
+      Long totalUpdateSelectedQuantity) {
     decreaseCartItemSelectedQuantityStrategy.decreaseCartItemSelectedQuantity(cartEntity,
         totalUpdateSelectedQuantity);
 
   }
 
   private void increase(CartEntity cartEntity,
-      int totalUpdateSelectedQuantity) {
+      Long  totalUpdateSelectedQuantity) {
     increaseCartItemSelectedQuantityStrategy.increase(cartEntity, totalUpdateSelectedQuantity);
   }
 

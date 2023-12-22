@@ -2,7 +2,6 @@ package kr.bb.wishlist.cart.repository;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import kr.bb.wishlist.cart.entity.CartCompositeKey;
 import kr.bb.wishlist.cart.entity.CartEntity;
@@ -24,12 +23,12 @@ class CartRepositoryTest {
     String secondProduct = "2";
     CartEntity cart1 = CartEntity.builder()
         .cartCompositekey(new CartCompositeKey(userId, firstProduct))
-        .selectedQuantity(5)
+        .selectedQuantity(5L)
         .build();
 
     CartEntity cart2 = CartEntity.builder()
         .cartCompositekey(new CartCompositeKey(userId, secondProduct))
-        .selectedQuantity(3)
+        .selectedQuantity(3L)
         .build();
 
     repository.save(cart1);
@@ -51,7 +50,7 @@ class CartRepositoryTest {
     CartCompositeKey cartCompositekey = new CartCompositeKey(1L, "1");
     CartEntity cartEntity = CartEntity.builder().cartCompositekey(cartCompositekey)
         .selectedQuantity(
-            1).build();
+            1L).build();
 
     repository.save(cartEntity);
 

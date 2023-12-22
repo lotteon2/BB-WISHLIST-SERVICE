@@ -55,7 +55,7 @@ public class FeignRequestHandler<UID extends UserId, PID extends ProductId, SID 
         ));
   }
 
-  public Map<String, Integer> getUserLikesProductIdAndSelectedQuantity(UID uid) {
+  public Map<String, Long> getUserLikesProductIdAndSelectedQuantity(UID uid) {
     List<CartEntity> cartEntityList = repository.findAllByCartCompositekey_UserId(
         uid.getValue());
 

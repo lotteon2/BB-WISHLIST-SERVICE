@@ -1,7 +1,6 @@
 package kr.bb.wishlist.cart.http.message;
 
 import java.util.Map;
-import kr.bb.wishlist.cart.dto.CartItemProductIdDto;
 import kr.bb.wishlist.cart.dto.response.GetUserCartItemsResponse;
 import kr.bb.wishlist.cart.http.feign.CartItemDetailInfoFeignRequest;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,7 @@ public class GetCartItemProductInfoMessageRequestImpl implements
 
   private final CartItemDetailInfoFeignRequest feignRequest;
   @Override
-  public GetUserCartItemsResponse request(Map<String,Integer> productIdWithSelectedQuantity) {
+  public GetUserCartItemsResponse request(Map<String,Long> productIdWithSelectedQuantity) {
     return feignRequest.getCartItemDetails(productIdWithSelectedQuantity).getData();
   }
 }

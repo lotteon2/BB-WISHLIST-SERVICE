@@ -6,5 +6,5 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface GetCartItemProductInfoMessageRequest {
-  public GetUserCartItemsResponse request(Map<String,Integer> productIdWithSelectedQuantity);
+  public GetUserCartItemsResponse request(Map<String,Long> productIdWithSelectedQuantity);
 }

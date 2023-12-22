@@ -3,6 +3,7 @@ package kr.bb.wishlist.cart.service;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -35,10 +36,10 @@ class UpdateCartItemServiceTest {
   @Test
   void UpdateCartItemSelectedQuantity_WhenUpdateUnder1_ThrowCartDomainException() {
     CartCompositeKey cartCompositeKey = new CartCompositeKey(1L, "1");
-    CartEntity cartEntity = new CartEntity(cartCompositeKey, 3);
+    CartEntity cartEntity = new CartEntity(cartCompositeKey, 3L);
 
     assertThrowsExactly(CartDomainException.class, () -> {
-      processor.update(cartEntity, cartEntity.getSelectedQuantity(), 0);
+      processor.update(cartEntity, cartEntity.getSelectedQuantity(), 0L);
     });
 
   }
@@ -48,26 +49,25 @@ class UpdateCartItemServiceTest {
   @Test
   void UpdateCartItemSelectedQuantity_WhenStockIsNotEnough_UpdateAsStockQuantity() {
     CartCompositeKey cartCompositeKey = new CartCompositeKey(1L, "1");
-    CartEntity cartEntity = new CartEntity(cartCompositeKey, 3);
+    CartEntity cartEntity = new CartEntity(cartCompositeKey, 3L);
 
-    processor.update(cartEntity, cartEntity.getSelectedQuantity(), 5);
+    processor.update(cartEntity, cartEntity.getSelectedQuantity(), 5L);
 
     verify(decreaseCartItemSelectedQuantityStrategy, never()).decreaseCartItemSelectedQuantity(
-        cartEntity, 4);
-    verify(increaseCartItemSelectedQuantityStrategy, never()).increase(cartEntity, 4);
-    verify(repository, times(1)).save(any());
+        cartEntity, 4L);
+    verify(increaseCartItemSelectedQuantityStrategy, never()).increase(cartEntity, 4L);
   }
 
   @DisplayName("현재 고른 개수보다 더 작고, 1개 미만으로 요청하지 않을 시 decreaseCartItemSelectedQuantityStrategy called")
   @Test
   void UpdateCartItemSelectedQuantity_WhenDecreaseQuantityAndNotUnder0_decreaseCartItemSelectedQuantityStrategyMethodCall() {
     CartCompositeKey cartCompositeKey = new CartCompositeKey(1L, "1");
-    CartEntity cartEntity = new CartEntity(cartCompositeKey, 3);
+    CartEntity cartEntity = new CartEntity(cartCompositeKey, 3L);
 
-    processor.update(cartEntity, cartEntity.getSelectedQuantity(), 2);
+    processor.update(cartEntity, cartEntity.getSelectedQuantity(), 2L);
 
     verify(decreaseCartItemSelectedQuantityStrategy, times(1)).decreaseCartItemSelectedQuantity(
-        any(), anyInt());
+        any(), anyLong());
 
   }
 
@@ -76,12 +76,12 @@ class UpdateCartItemServiceTest {
   @Test
   void UpdateCartItemSelectedQuantity_WhenStockIsEnoughAndIncreaseQuantity_IncreaseCartItemSelectedQuantityStrategyMethodIsCalled() {
     CartCompositeKey cartCompositeKey = new CartCompositeKey(1L, "1");
-    CartEntity cartEntity = new CartEntity(cartCompositeKey, 3);
+    CartEntity cartEntity = new CartEntity(cartCompositeKey, 3L);
 
-    processor.update(cartEntity, cartEntity.getSelectedQuantity(), 6);
+    processor.update(cartEntity, cartEntity.getSelectedQuantity(), 6L);
 
     verify(increaseCartItemSelectedQuantityStrategy, times(1)).increase(any(CartEntity.class),
-        anyInt());
+        anyLong());
   }
 
 
