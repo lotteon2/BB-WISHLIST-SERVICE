@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CartService<UID extends UserId, PID extends ProductId> {
    CartItemProductIdDto getCartItem(UID userId);
-   AddCartItemStatus addCartItem(UID userId, PID productId, int selectedQuantity);
+   AddCartItemStatus addCartItem(UID userId, PID productId, Long  selectedQuantity);
    void deleteCartItems(UID userId, List<PID> productIdList);
-   void updateCartItemSelectedQuantity(UID userId, PID productId, int totalSelectedQuantity,
-       int stock);
+   void updateCartItemSelectedQuantity(UID userId, PID productId, Long totalSelectedQuantity);
 }

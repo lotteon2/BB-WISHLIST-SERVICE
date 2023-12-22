@@ -16,5 +16,5 @@ import lombok.NoArgsConstructor;
 public class CartEntity extends BaseEntity {
   @EmbeddedId
   private CartCompositeKey cartCompositekey;
-  private int selectedQuantity;
+  private Long selectedQuantity;
 }

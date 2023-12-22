@@ -8,5 +8,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface AddCartItemWhenCartItemIsAlreadyExist {
-  public AddCartItemStatus addCartItem(UserId userId, ProductId productId, int selectedQuantity);
+  public AddCartItemStatus addCartItem(UserId userId, ProductId productId, Long selectedQuantity);
 }

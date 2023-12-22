@@ -19,7 +19,7 @@ public class IncreaseCartItemQuantity implements
   private final CartJpaRepository repository;
 
   @Override
-  public AddCartItemStatus addCartItem(UserId userId, ProductId productId, int selectedQuantity) {
+  public AddCartItemStatus addCartItem(UserId userId, ProductId productId, Long selectedQuantity) {
 
     Optional<CartEntity> cartEntityOptional = repository.findById(
         CartCompkeyMakerUtil.cartEntityCompKey(userId, productId));
@@ -34,14 +34,14 @@ public class IncreaseCartItemQuantity implements
   }
 
   private void saveWhenCartItemIsNotExist(UserId userId, ProductId productId,
-      int selectedQuantity) {
+      Long  selectedQuantity) {
     repository.save(CartEntity.builder()
         .cartCompositekey(CartCompkeyMakerUtil.cartEntityCompKey(userId, productId))
         .selectedQuantity(selectedQuantity).build());
   }
 
   private void increaseSelectedQuantityWhenCartIsExist(CartEntity cartEntity,
-      int increasedQuantity) {
+      Long increasedQuantity) {
     repository.save(CartMapper.getCartEntityWithUpdatedSelectedQuantity(cartEntity,
         cartEntity.getSelectedQuantity() + increasedQuantity));
   }

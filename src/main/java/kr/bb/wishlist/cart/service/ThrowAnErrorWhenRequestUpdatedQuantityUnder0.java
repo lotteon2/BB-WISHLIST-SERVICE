@@ -14,8 +14,8 @@ public class ThrowAnErrorWhenRequestUpdatedQuantityUnder0 implements
 
   private final CartJpaRepository repository;
   @Override
-  public void decreaseCartItemSelectedQuantity(CartEntity cartEntity, int stock,
-      int updatedDecreasedStock) {
+  public void decreaseCartItemSelectedQuantity(CartEntity cartEntity,
+      Long updatedDecreasedStock) {
     if(updatedDecreasedStock < 1){
       throw new CartDomainException("1개 미만으로는 상품의 재고를 업데이트 할 수 없습니다.");
     }

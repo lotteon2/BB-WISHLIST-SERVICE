@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @Getter
 public class UpdateCartItemCommand {
 
-  public int updatedQuantity ;
+  public Long updatedQuantity ;
 }

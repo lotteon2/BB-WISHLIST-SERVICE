@@ -1,8 +1,8 @@
 package kr.bb.wishlist.likes.http.message;
 
+import bloomingblooms.domain.wishlist.likes.LikedProductInfoResponse;
 import java.util.List;
 import kr.bb.wishlist.common.valueobject.ProductId;
-import kr.bb.wishlist.likes.dto.response.LikedProductInfoResponse;
 import org.springframework.stereotype.Component;
 
 @Component

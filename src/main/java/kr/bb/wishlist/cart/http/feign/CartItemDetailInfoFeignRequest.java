@@ -1,15 +1,16 @@
 package kr.bb.wishlist.cart.http.feign;
 
-import javax.validation.Valid;
-import kr.bb.wishlist.cart.dto.CartItemProductIdDto;
-import kr.bb.wishlist.cart.dto.response.GetUserCartItemsResponse;
+import bloomingblooms.domain.wishlist.cart.GetUserCartItemsResponse;
+import bloomingblooms.response.CommonResponse;
+import java.util.Map;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "get-cart-items-detail",url = "${service.product.domain}")
+@FeignClient(name = "get-cart-items-detail", url = "${service.product.domain}")
 public interface CartItemDetailInfoFeignRequest {
-  @GetMapping("/products/carts")
-  public ResponseEntity<GetUserCartItemsResponse> getCartItemDetails(@Valid @RequestBody CartItemProductIdDto productIdList);
+
+  @PostMapping("/client/products/carts")
+  CommonResponse<GetUserCartItemsResponse> getCartItemDetails(
+      @RequestBody Map<String, Long> productIdWithSelectedQuantity);
 }

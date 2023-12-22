@@ -1,18 +1,18 @@
 package kr.bb.wishlist.cart.http.controller;
 
+import bloomingblooms.domain.wishlist.cart.GetUserCartItemsResponse;
 import bloomingblooms.response.CommonResponse;
 import javax.validation.Valid;
-import kr.bb.wishlist.cart.dto.CartItemProductIdDto;
 import kr.bb.wishlist.cart.dto.command.AddCartItemCommand;
 import kr.bb.wishlist.cart.dto.command.DeleteCartItemListCommand;
 import kr.bb.wishlist.cart.dto.command.UpdateCartItemCommand;
-import kr.bb.wishlist.cart.dto.response.GetUserCartItemsResponse;
-import kr.bb.wishlist.cart.http.controller.message.CartItemStockMessageRequest;
 import kr.bb.wishlist.cart.http.message.GetCartItemProductInfoMessageRequest;
 import kr.bb.wishlist.cart.service.CartService;
 import kr.bb.wishlist.cart.valueobject.AddCartItemStatus;
 import kr.bb.wishlist.common.valueobject.ProductId;
+import kr.bb.wishlist.common.valueobject.StoreId;
 import kr.bb.wishlist.common.valueobject.UserId;
+import kr.bb.wishlist.likes.http.feign.handler.FeignRequestHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,16 +26,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CartRestController {
 
-  private final CartItemStockMessageRequest<ProductId> cartItemStockRequest;
   private final CartService<UserId, ProductId> cartService;
   private final GetCartItemProductInfoMessageRequest productInfoRequest;
-
+  private final FeignRequestHandler<UserId, ProductId, StoreId> feignRequestHandler;
 
   @GetMapping("/carts")
   public CommonResponse<GetUserCartItemsResponse> getUserCartProducts(
       @RequestHeader Long userId) {
-    CartItemProductIdDto productIdList = cartService.getCartItem(new UserId(userId));
-    return CommonResponse.success(productInfoRequest.request(productIdList));
+
+    return CommonResponse.success(productInfoRequest.request(
+        feignRequestHandler.getUserLikesProductIdAndSelectedQuantity(new UserId(userId))));
   }
 
   @PostMapping("/carts")
@@ -57,9 +57,8 @@ public class CartRestController {
   public CommonResponse<String> updateCartItemSelectedQuantity(
       @RequestHeader Long userId, @Valid @RequestBody UpdateCartItemCommand command,
       @PathVariable String productId) {
-    int stock = cartItemStockRequest.request(new ProductId(productId));
     cartService.updateCartItemSelectedQuantity(new UserId(userId), new ProductId(productId),
-        command.getUpdatedQuantity(), stock);
+        command.getUpdatedQuantity());
     return CommonResponse.success("카트 재고 업데이트 성공");
 
   }

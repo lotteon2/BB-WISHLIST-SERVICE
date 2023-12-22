@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CartServiceImpl implements
     CartService<UserId, ProductId> {
-
   private final UpdateCartItemSelectedQuantityProcessor updateCartItemSelectedQuantityProcessor;
   private final AddCartItemWhenCartItemIsAlreadyExist addCartItemStrategy;
   private final CartJpaRepository repository;
@@ -44,7 +43,7 @@ public class CartServiceImpl implements
   }
 
   @Override
-  public AddCartItemStatus addCartItem(UserId userId, ProductId productId, int selectedQuantity) {
+  public AddCartItemStatus addCartItem(UserId userId, ProductId productId, Long selectedQuantity) {
     return addCartItemStrategy.addCartItem(userId, productId, selectedQuantity);
   }
 
@@ -57,15 +56,14 @@ public class CartServiceImpl implements
   }
 
   @Override
-  public void updateCartItemSelectedQuantity(UserId userId, ProductId productId,
-      int updatedSelectedQuantity, int stock) {
+  public void updateCartItemSelectedQuantity(UserId userId, ProductId productId,Long updatedSelectedQuantity) {
     CartEntity cartEntity = repository.findById(
             CartCompkeyMakerUtil.cartEntityCompKey(userId, productId))
         .orElseThrow(() -> {
           throw new CartDomainException("존재 하지 않는 카트 상품입니다.");
         });
     updateCartItemSelectedQuantityProcessor.update(cartEntity, cartEntity.getSelectedQuantity(),
-        updatedSelectedQuantity, stock);
+        updatedSelectedQuantity);
   }
 
   private List<ProductIdProjection> filterProductIdList(List<CartEntity> cartEntityList) {
