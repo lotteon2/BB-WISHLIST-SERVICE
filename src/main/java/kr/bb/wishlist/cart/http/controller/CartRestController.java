@@ -7,7 +7,6 @@ import kr.bb.wishlist.cart.dto.command.AddCartItemCommand;
 import kr.bb.wishlist.cart.dto.command.DeleteCartItemListCommand;
 import kr.bb.wishlist.cart.dto.command.UpdateCartItemCommand;
 import kr.bb.wishlist.cart.dto.response.GetUserCartItemsResponse;
-import kr.bb.wishlist.cart.http.controller.message.CartItemStockMessageRequest;
 import kr.bb.wishlist.cart.http.message.GetCartItemProductInfoMessageRequest;
 import kr.bb.wishlist.cart.service.CartService;
 import kr.bb.wishlist.cart.valueobject.AddCartItemStatus;
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CartRestController {
 
-  private final CartItemStockMessageRequest<ProductId> cartItemStockRequest;
   private final CartService<UserId, ProductId> cartService;
   private final GetCartItemProductInfoMessageRequest productInfoRequest;
 
@@ -57,9 +55,8 @@ public class CartRestController {
   public CommonResponse<String> updateCartItemSelectedQuantity(
       @RequestHeader Long userId, @Valid @RequestBody UpdateCartItemCommand command,
       @PathVariable String productId) {
-    int stock = cartItemStockRequest.request(new ProductId(productId));
     cartService.updateCartItemSelectedQuantity(new UserId(userId), new ProductId(productId),
-        command.getUpdatedQuantity(), stock);
+        command.getUpdatedQuantity());
     return CommonResponse.success("카트 재고 업데이트 성공");
 
   }

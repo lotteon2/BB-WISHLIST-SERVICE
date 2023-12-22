@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DecreaseCartItemSelectedQuantityStrategy {
 
-  void decreaseCartItemSelectedQuantity(CartEntity cartEntity, int stock,
+  void decreaseCartItemSelectedQuantity(CartEntity cartEntity,
       int updatedDecreasedStock);
 }

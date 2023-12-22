@@ -38,7 +38,7 @@ class UpdateCartItemServiceTest {
     CartEntity cartEntity = new CartEntity(cartCompositeKey, 3);
 
     assertThrowsExactly(CartDomainException.class, () -> {
-      processor.update(cartEntity, cartEntity.getSelectedQuantity(), 0, 3);
+      processor.update(cartEntity, cartEntity.getSelectedQuantity(), 0);
     });
 
   }
@@ -50,11 +50,11 @@ class UpdateCartItemServiceTest {
     CartCompositeKey cartCompositeKey = new CartCompositeKey(1L, "1");
     CartEntity cartEntity = new CartEntity(cartCompositeKey, 3);
 
-    processor.update(cartEntity, cartEntity.getSelectedQuantity(), 5, 4);
+    processor.update(cartEntity, cartEntity.getSelectedQuantity(), 5);
 
     verify(decreaseCartItemSelectedQuantityStrategy, never()).decreaseCartItemSelectedQuantity(
-        cartEntity, 4, 5);
-    verify(increaseCartItemSelectedQuantityStrategy, never()).increase(cartEntity, 4, 5);
+        cartEntity, 4);
+    verify(increaseCartItemSelectedQuantityStrategy, never()).increase(cartEntity, 4);
     verify(repository, times(1)).save(any());
   }
 
@@ -64,10 +64,10 @@ class UpdateCartItemServiceTest {
     CartCompositeKey cartCompositeKey = new CartCompositeKey(1L, "1");
     CartEntity cartEntity = new CartEntity(cartCompositeKey, 3);
 
-    processor.update(cartEntity, cartEntity.getSelectedQuantity(), 2, 4);
+    processor.update(cartEntity, cartEntity.getSelectedQuantity(), 2);
 
     verify(decreaseCartItemSelectedQuantityStrategy, times(1)).decreaseCartItemSelectedQuantity(
-        any(), anyInt(), anyInt());
+        any(), anyInt());
 
   }
 
@@ -78,10 +78,10 @@ class UpdateCartItemServiceTest {
     CartCompositeKey cartCompositeKey = new CartCompositeKey(1L, "1");
     CartEntity cartEntity = new CartEntity(cartCompositeKey, 3);
 
-    processor.update(cartEntity, cartEntity.getSelectedQuantity(), 6, 10);
+    processor.update(cartEntity, cartEntity.getSelectedQuantity(), 6);
 
     verify(increaseCartItemSelectedQuantityStrategy, times(1)).increase(any(CartEntity.class),
-        anyInt(), anyInt());
+        anyInt());
   }
 
 

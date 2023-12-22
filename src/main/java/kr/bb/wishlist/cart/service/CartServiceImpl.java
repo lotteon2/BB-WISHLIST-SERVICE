@@ -58,14 +58,14 @@ public class CartServiceImpl implements
 
   @Override
   public void updateCartItemSelectedQuantity(UserId userId, ProductId productId,
-      int updatedSelectedQuantity, int stock) {
+      int updatedSelectedQuantity) {
     CartEntity cartEntity = repository.findById(
             CartCompkeyMakerUtil.cartEntityCompKey(userId, productId))
         .orElseThrow(() -> {
           throw new CartDomainException("존재 하지 않는 카트 상품입니다.");
         });
     updateCartItemSelectedQuantityProcessor.update(cartEntity, cartEntity.getSelectedQuantity(),
-        updatedSelectedQuantity, stock);
+        updatedSelectedQuantity);
   }
 
   private List<ProductIdProjection> filterProductIdList(List<CartEntity> cartEntityList) {
