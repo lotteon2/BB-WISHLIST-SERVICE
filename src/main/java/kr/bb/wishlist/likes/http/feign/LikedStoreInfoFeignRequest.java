@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "get-liked-store-info",url = "${service.store.domain}")
 public interface LikedStoreInfoFeignRequest {
 
-  @PostMapping("/client/stores/likes")
+  @PostMapping("/client/stores/simple-info")
   public CommonResponse<LikedStoreInfoResponse> getLikedStoreInfo(@RequestBody StoreIdListDto storeIdListDto);
 
 
