@@ -58,7 +58,7 @@ public class CartRestController {
   public CommonResponse<String> updateCartItemSelectedQuantity(
       @RequestHeader Long userId, @Valid @RequestBody UpdateCartItemCommand<ProductId> command,) {
     cartService.updateCartItemSelectedQuantity(new UserId(userId), new ProductId(productId),
-        command.getSelectedQuantitiy());
+        command.getSelectedQuantity());
     return CommonResponse.success("카트 재고 업데이트 성공");
 
   }

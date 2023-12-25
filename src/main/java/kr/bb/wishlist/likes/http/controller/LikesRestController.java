@@ -28,7 +28,7 @@ public class LikesRestController {
   private final LikesProductService<ProductId> likesProductService;
 
 
-  @GetMapping("/likes/product")
+  @GetMapping("/likes/products")
   public CommonResponse<LikedProductInfoResponse> getUserProductLikes(
       @RequestHeader Long userId) {
     LikedProductInfoResponse response = productInfoRequest.request(
@@ -36,7 +36,7 @@ public class LikesRestController {
     return CommonResponse.success(response);
   }
 
-  @GetMapping("/likes/store")
+  @GetMapping("/likes/stores")
   public CommonResponse<LikedStoreInfoResponse> getUserStoreLikes(
       @RequestHeader Long userId) {
     LikedStoreInfoResponse response = storeInfoRequest.request(
@@ -45,7 +45,7 @@ public class LikesRestController {
   }
 
 
-  @PutMapping("/likes/product")
+  @PutMapping("/likes/products")
   public CommonResponse<String> onOffProductLikes(
       @RequestHeader Long userId, @RequestBody List<ProductId> productIdList) {
     likesProductService.likesProduct(productIdList, new UserId(userId));
