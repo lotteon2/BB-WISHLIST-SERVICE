@@ -56,8 +56,8 @@ public class CartRestController {
 
   @PatchMapping("/carts/products")
   public CommonResponse<String> updateCartItemSelectedQuantity(
-      @RequestHeader Long userId, @Valid @RequestBody UpdateCartItemCommand<ProductId> command,) {
-    cartService.updateCartItemSelectedQuantity(new UserId(userId), new ProductId(productId),
+      @RequestHeader Long userId, @Valid @RequestBody UpdateCartItemCommand<ProductId> command) {
+    cartService.updateCartItemSelectedQuantity(new UserId(userId), command.getProductId(),
         command.getSelectedQuantity());
     return CommonResponse.success("카트 재고 업데이트 성공");
 
