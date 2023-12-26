@@ -12,6 +12,7 @@ import kr.bb.wishlist.likes.http.message.LikedStoreInfoRequest;
 import kr.bb.wishlist.likes.service.LikesStoreService;
 import kr.bb.wishlist.likes.service.LikesProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,24 +29,25 @@ public class LikesRestController {
   private final LikesProductService<ProductId> likesProductService;
 
 
-  @GetMapping("/likes/product")
+  @GetMapping("/likes/products")
   public CommonResponse<LikedProductInfoResponse> getUserProductLikes(
-      @RequestHeader Long userId) {
+      @RequestHeader Long userId,
+      Pageable pageable) {
     LikedProductInfoResponse response = productInfoRequest.request(
-        likesProductService.getProductLikes(new UserId(userId)));
+        likesProductService.getProductLikes(new UserId(userId)),pageable);
     return CommonResponse.success(response);
   }
 
-  @GetMapping("/likes/store")
+  @GetMapping("/likes/stores")
   public CommonResponse<LikedStoreInfoResponse> getUserStoreLikes(
-      @RequestHeader Long userId) {
+      @RequestHeader Long userId,Pageable pageable) {
     LikedStoreInfoResponse response = storeInfoRequest.request(
-        likesStoreService.getStoreIdLikes(new UserId(userId)));
+        likesStoreService.getStoreIdLikes(new UserId(userId)),pageable);
     return CommonResponse.success(response);
   }
 
 
-  @PutMapping("/likes/product")
+  @PutMapping("/likes/products")
   public CommonResponse<String> onOffProductLikes(
       @RequestHeader Long userId, @RequestBody List<ProductId> productIdList) {
     likesProductService.likesProduct(productIdList, new UserId(userId));

@@ -5,6 +5,7 @@ import java.util.List;
 import kr.bb.wishlist.common.valueobject.ProductId;
 import kr.bb.wishlist.likes.http.feign.GetLikedProductInfoFeignRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
@@ -15,8 +16,8 @@ public class LikedProductInfoRequestImpl implements
   private final GetLikedProductInfoFeignRequest feignRequest;
 
   @Override
-  public LikedProductInfoResponse request(List<ProductId> productIdList) {
-    return feignRequest.getProductDetailWhichUserLiked(ProductId.convertList(productIdList))
+  public LikedProductInfoResponse request(List<ProductId> productIdList, Pageable pageable) {
+    return feignRequest.getProductDetailWhichUserLiked(ProductId.convertList(productIdList),pageable)
         .getData();
   }
 

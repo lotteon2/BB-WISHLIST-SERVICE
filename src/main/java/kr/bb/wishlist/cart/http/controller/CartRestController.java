@@ -2,9 +2,9 @@ package kr.bb.wishlist.cart.http.controller;
 
 import bloomingblooms.domain.wishlist.cart.GetUserCartItemsResponse;
 import bloomingblooms.response.CommonResponse;
+import java.util.List;
 import javax.validation.Valid;
 import kr.bb.wishlist.cart.dto.command.AddCartItemCommand;
-import kr.bb.wishlist.cart.dto.command.DeleteCartItemListCommand;
 import kr.bb.wishlist.cart.dto.command.UpdateCartItemCommand;
 import kr.bb.wishlist.cart.http.message.GetCartItemProductInfoMessageRequest;
 import kr.bb.wishlist.cart.service.CartService;
@@ -15,6 +15,7 @@ import kr.bb.wishlist.common.valueobject.UserId;
 import kr.bb.wishlist.likes.http.feign.handler.FeignRequestHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -48,17 +49,16 @@ public class CartRestController {
 
   @PutMapping("/carts/products")
   public CommonResponse<String> deleteCartItems(
-      @RequestHeader Long userId, @Valid @RequestBody DeleteCartItemListCommand command) {
-    cartService.deleteCartItems(new UserId(userId), command.getProductIdList());
+      @RequestHeader Long userId, @Valid @RequestBody List<ProductId> productIdList) {
+    cartService.deleteCartItems(new UserId(userId), productIdList);
     return CommonResponse.success("장바구니 상품 삭제 성공");
   }
 
-  @PutMapping("/carts/products/{productId}")
+  @PatchMapping("/carts/products")
   public CommonResponse<String> updateCartItemSelectedQuantity(
-      @RequestHeader Long userId, @Valid @RequestBody UpdateCartItemCommand command,
-      @PathVariable String productId) {
-    cartService.updateCartItemSelectedQuantity(new UserId(userId), new ProductId(productId),
-        command.getUpdatedQuantity());
+      @RequestHeader Long userId, @Valid @RequestBody UpdateCartItemCommand<ProductId> command) {
+    cartService.updateCartItemSelectedQuantity(new UserId(userId), command.getProductId(),
+        command.getSelectedQuantity());
     return CommonResponse.success("카트 재고 업데이트 성공");
 
   }

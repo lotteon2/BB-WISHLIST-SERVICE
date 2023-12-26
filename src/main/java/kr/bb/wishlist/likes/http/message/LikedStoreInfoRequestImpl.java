@@ -6,6 +6,7 @@ import kr.bb.wishlist.common.valueobject.StoreId;
 import kr.bb.wishlist.likes.dto.message.StoreIdListDto;
 import kr.bb.wishlist.likes.http.feign.LikedStoreInfoFeignRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
@@ -15,7 +16,7 @@ public class LikedStoreInfoRequestImpl implements
 
   private final LikedStoreInfoFeignRequest feignRequest;
   @Override
-  public LikedStoreInfoResponse request(List<StoreId> storeIdList) {
-    return feignRequest.getLikedStoreInfo(new StoreIdListDto(storeIdList)).getData();
+  public LikedStoreInfoResponse request(List<StoreId> storeIdList, Pageable pageable) {
+    return feignRequest.getLikedStoreInfo(new StoreIdListDto(storeIdList),pageable).getData();
   }
 }
