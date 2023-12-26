@@ -16,7 +16,7 @@ public class DeleteWhenRequestUpdatedQuantityUnder0 implements
   @Override
   public void decreaseCartItemSelectedQuantity(CartEntity cartEntity,
       Long updatedDecreasedStock) {
-    if (updatedDecreasedStock < 0) {
+    if (updatedDecreasedStock <= 0) {
       repository.delete(cartEntity);
     } else {
       repository.save(

@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import kr.bb.wishlist.cart.entity.CartCompositeKey;
 import kr.bb.wishlist.cart.entity.CartEntity;
@@ -32,16 +33,15 @@ class UpdateCartItemServiceTest {
   private DecreaseCartItemSelectedQuantityStrategy decreaseCartItemSelectedQuantityStrategy;
 
 
-  @DisplayName("1개 미만으로 수량을 조절할 때 Throw CartDomainException")
+  @DisplayName("1개 미만으로 수량을 조절할 때 decrease cartItem call")
   @Test
   void UpdateCartItemSelectedQuantity_WhenUpdateUnder1_ThrowCartDomainException() {
     CartCompositeKey cartCompositeKey = new CartCompositeKey(1L, "1");
     CartEntity cartEntity = new CartEntity(cartCompositeKey, 3L);
 
-    assertThrowsExactly(CartDomainException.class, () -> {
-      processor.update(cartEntity, cartEntity.getSelectedQuantity(), 0L);
-    });
-
+    processor.update(cartEntity, cartEntity.getSelectedQuantity(), 0L);
+    verify(decreaseCartItemSelectedQuantityStrategy, times(1)).decreaseCartItemSelectedQuantity(
+        any(), anyLong());
   }
 
 
