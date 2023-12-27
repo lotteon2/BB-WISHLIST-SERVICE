@@ -4,8 +4,6 @@ import bloomingblooms.domain.wishlist.likes.LikedProductInfoResponse;
 import bloomingblooms.response.CommonResponse;
 import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -14,7 +12,7 @@ public interface GetLikedProductInfoFeignRequest {
 
 
   @PostMapping("/client/products/likes")
-  CommonResponse<LikedProductInfoResponse> getProductDetailWhichUserLiked(
-      @RequestBody List<String> productList, Pageable pageable);
+  CommonResponse<List<LikedProductInfoResponse>> getProductDetailWhichUserLiked(
+      @RequestBody List<String> productList);
 
 }

@@ -12,14 +12,13 @@ import kr.bb.wishlist.common.valueobject.UserId;
 import kr.bb.wishlist.likes.service.LikesProductService;
 import kr.bb.wishlist.likes.service.LikesStoreService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
 public class FeignRequestHandler<UID extends UserId, PID extends ProductId, SID extends StoreId> {
 
-  private final CartJpaRepository repository;
+  private final CartJpaRepository cartRepository;
   private final LikesProductService<PID> likesProductService;
   private final LikesStoreService<SID> likesStoreService;
 
@@ -35,7 +34,7 @@ public class FeignRequestHandler<UID extends UserId, PID extends ProductId, SID 
     List<PID> productIdList = likesProductService.getProductLikes(userId);
 
     return productIdList.stream()
-        .filter(inputProductList::contains).map(BaseId::getValue)
+        .filter(pid -> inputProductList.contains(pid.getValue())).map(BaseId::getValue)
         .collect(Collectors.toList());
 
   }
@@ -55,8 +54,8 @@ public class FeignRequestHandler<UID extends UserId, PID extends ProductId, SID 
         ));
   }
 
-  public Map<String, Long> getUserLikesProductIdAndSelectedQuantity(UID uid) {
-    List<CartEntity> cartEntityList = repository.findAllByCartCompositekey_UserId(
+  public Map<String, Long> getUserCartProductIdAndSelectedQuantity(UID uid) {
+    List<CartEntity> cartEntityList = cartRepository.findAllByCartCompositekey_UserId(
         uid.getValue());
 
     return cartEntityList.stream()

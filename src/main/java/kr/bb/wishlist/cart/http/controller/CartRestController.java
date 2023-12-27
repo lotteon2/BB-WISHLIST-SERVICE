@@ -35,7 +35,7 @@ public class CartRestController {
       @RequestHeader Long userId) {
 
     return CommonResponse.success(productInfoRequest.request(
-        feignRequestHandler.getUserLikesProductIdAndSelectedQuantity(new UserId(userId))));
+        feignRequestHandler.getUserCartProductIdAndSelectedQuantity(new UserId(userId))));
   }
 
   @PostMapping("/carts")

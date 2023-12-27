@@ -3,7 +3,9 @@ package kr.bb.wishlist.likes.http.controller;
 import bloomingblooms.domain.wishlist.likes.LikedProductInfoResponse;
 import bloomingblooms.domain.wishlist.likes.LikedStoreInfoResponse;
 import bloomingblooms.response.CommonResponse;
+import java.util.Collections;
 import java.util.List;
+import kr.bb.wishlist.common.util.PaginationUtil;
 import kr.bb.wishlist.common.valueobject.ProductId;
 import kr.bb.wishlist.common.valueobject.StoreId;
 import kr.bb.wishlist.common.valueobject.UserId;
@@ -30,22 +32,48 @@ public class LikesRestController {
 
 
   @GetMapping("/likes/products")
-  public CommonResponse<LikedProductInfoResponse> getUserProductLikes(
-      @RequestHeader Long userId,
-      Pageable pageable) {
-    LikedProductInfoResponse response = productInfoRequest.request(
-        likesProductService.getProductLikes(new UserId(userId)),pageable);
+  public CommonResponse<List<LikedProductInfoResponse>> getUserProductLikes(
+      @RequestHeader Long userId, Pageable pageable) {
+
+    List<ProductId> productIdList = likesProductService.getProductLikes(new UserId(userId));
+
+    int limitStart = PaginationUtil.calculateLimitStart(pageable);
+    int limitEnd = PaginationUtil.calculateLimitEnd(pageable, productIdList.size());
+
+    List<LikedProductInfoResponse> response = fetchLikedProductsInfo(productIdList, limitStart,limitEnd);
+
     return CommonResponse.success(response);
+  }
+
+    private List<LikedProductInfoResponse> fetchLikedProductsInfo(List<ProductId> productIdList,
+      int limitStart,int limitEnd) {
+    if (!isValidSublistRequest(productIdList, limitStart, limitEnd)) {
+      return Collections.emptyList();
+    }
+    return productInfoRequest.request(productIdList);
   }
 
   @GetMapping("/likes/stores")
-  public CommonResponse<LikedStoreInfoResponse> getUserStoreLikes(
-      @RequestHeader Long userId,Pageable pageable) {
-    LikedStoreInfoResponse response = storeInfoRequest.request(
-        likesStoreService.getStoreIdLikes(new UserId(userId)),pageable);
+  public CommonResponse<List<LikedStoreInfoResponse>> getUserStoreLikes(
+      @RequestHeader Long userId, Pageable pageable) {
+
+    List<StoreId> storeIdList = likesStoreService.getStoreIdLikes(new UserId(userId));
+    int limitStart = PaginationUtil.calculateLimitStart(pageable);
+    int limitEnd = PaginationUtil.calculateLimitEnd(pageable, storeIdList.size());
+
+    List<LikedStoreInfoResponse> response = fetchLikedStores(storeIdList, limitStart, limitEnd);
+
     return CommonResponse.success(response);
   }
 
+  private List<LikedStoreInfoResponse> fetchLikedStores(List<StoreId> storeIdList, int limitStart,
+      int limitEnd) {
+    if (!isValidSublistRequest(storeIdList, limitStart, limitEnd)) {
+      return Collections.emptyList();
+    }
+
+    return storeInfoRequest.request(storeIdList.subList(limitStart, limitEnd));
+  }
 
   @PutMapping("/likes/products")
   public CommonResponse<String> onOffProductLikes(
@@ -61,4 +89,7 @@ public class LikesRestController {
     return CommonResponse.success("찜 취소, 혹은 찜 성공");
   }
 
+  private boolean isValidSublistRequest(List<?> list, int limitStart, int limitEnd) {
+    return limitStart >= 0 && limitStart < limitEnd && limitEnd <= list.size();
+  }
 }
