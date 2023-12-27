@@ -2,11 +2,11 @@ package kr.bb.wishlist.likes.http.message;
 
 import bloomingblooms.domain.wishlist.likes.LikedStoreInfoResponse;
 import java.util.List;
+import java.util.stream.Collectors;
+import kr.bb.wishlist.common.valueobject.BaseId;
 import kr.bb.wishlist.common.valueobject.StoreId;
-import kr.bb.wishlist.likes.dto.message.StoreIdListDto;
 import kr.bb.wishlist.likes.http.feign.LikedStoreInfoFeignRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
@@ -16,7 +16,12 @@ public class LikedStoreInfoRequestImpl implements
 
   private final LikedStoreInfoFeignRequest feignRequest;
   @Override
-  public LikedStoreInfoResponse request(List<StoreId> storeIdList, Pageable pageable) {
-    return feignRequest.getLikedStoreInfo(new StoreIdListDto(storeIdList),pageable).getData();
+  public List<LikedStoreInfoResponse> request(List<StoreId> storeIdList) {
+    return feignRequest.getLikedStoreInfo(convertLongType(storeIdList)).getData();
   }
+
+  private List<Long> convertLongType(List<StoreId> storeIdList){
+    return storeIdList.stream().map(BaseId::getValue).collect(Collectors.toList());
+  }
+
 }

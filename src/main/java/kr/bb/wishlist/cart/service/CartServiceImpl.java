@@ -1,7 +1,6 @@
 package kr.bb.wishlist.cart.service;
 
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
@@ -15,6 +14,7 @@ import kr.bb.wishlist.cart.valueobject.AddCartItemStatus;
 import kr.bb.wishlist.common.valueobject.ProductId;
 import kr.bb.wishlist.common.valueobject.UserId;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -50,8 +50,12 @@ public class CartServiceImpl implements
   @Transactional
   @Override
   public void deleteCartItems(UserId userId, List<ProductId> productIdList) {
-    for (ProductId productId : productIdList) {
-      repository.deleteById(CartCompkeyMakerUtil.cartEntityCompKey(userId,productId));
+    try {
+      for (ProductId productId : productIdList) {
+        repository.deleteById(CartCompkeyMakerUtil.cartEntityCompKey(userId, productId));
+      }
+    } catch (EmptyResultDataAccessException e) {
+      throw new CartDomainException("존재하지 않는 카트 상품입니다.");
     }
   }
 

@@ -1,11 +1,11 @@
 package kr.bb.wishlist.likes.service;
 
+import java.util.Optional;
 import javax.transaction.Transactional;
 import kr.bb.wishlist.common.valueobject.ProductId;
 import kr.bb.wishlist.common.valueobject.UserId;
 import kr.bb.wishlist.likes.entity.ProductLikesCompositeKey;
 import kr.bb.wishlist.likes.entity.ProductLikesEntity;
-import kr.bb.wishlist.likes.exception.LikesDomainException;
 import kr.bb.wishlist.likes.mapper.ProductLikesMapper;
 import kr.bb.wishlist.likes.repository.LikesProductJpaRepository;
 import kr.bb.wishlist.likes.util.ProductLikesCompKeyMaker;
@@ -22,19 +22,22 @@ public class ProductLikesOnOffWhenRequestTwice implements
   @Transactional
   @Override
   public void likes(ProductId productId, UserId userId) {
-    ProductLikesEntity productLikesEntity = getProductLikesEntity(
-        ProductLikesCompKeyMaker.get(productId, userId));
+    ProductLikesCompositeKey compositeKey = ProductLikesCompKeyMaker.get(productId, userId);
+    Optional<ProductLikesEntity> optionalProductLikesEntity = repository.findById(compositeKey);
 
-    Boolean changedStatus = !productLikesEntity.getIsLiked();
+    if (optionalProductLikesEntity.isPresent()) {
+      likesCancel(optionalProductLikesEntity.get());
+    } else {
+      repository.save(
+          ProductLikesEntity.builder().isLiked(true).likesCompositeKey(compositeKey).build());
+    }
 
-    repository.save(
-        ProductLikesMapper.productLikesWithNewStatus(productLikesEntity, changedStatus));
+
   }
 
-  private ProductLikesEntity getProductLikesEntity(
-      ProductLikesCompositeKey productLikesCompositeKey) {
-    return repository.findById(productLikesCompositeKey).orElseThrow(()->{
-      throw new LikesDomainException("존재하지 않는 상품 찜입니다.");
-    });
+  private void likesCancel(ProductLikesEntity productLikesEntity) {
+    repository.save(
+        ProductLikesMapper.productLikesWithNewStatus(productLikesEntity,
+            !productLikesEntity.getIsLiked()));
   }
 }
