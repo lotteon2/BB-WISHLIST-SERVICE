@@ -44,7 +44,7 @@ public class LikesFeignController {
 
   }
 
-  @GetMapping("/client/likes/stores")
+  @PostMapping("/client/likes/stores")
   public CommonResponse<Map<Long, Boolean>> getBooleanByUserIdWithStoreLikesInput(
       @RequestHeader Long userId, @RequestBody List<Long> storeIds) {
     return CommonResponse.success(feignRequestHandler.getUserLikesInputStoreIdList(StoreId.convertToStoreIdList(storeIds), new UserId(userId)));
