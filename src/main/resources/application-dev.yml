@@ -1,0 +1,17 @@
+server:
+  port: 8500
+spring:
+  application:
+    name: wishlist-service
+  config:
+    activate:
+      on-profile: dev
+    import: optional:configserver:http://config-service:8888
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "refresh"
+          - "bus-refresh"
