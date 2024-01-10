@@ -10,6 +10,7 @@ import kr.bb.wishlist.common.valueobject.ProductId;
 import kr.bb.wishlist.common.valueobject.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class DeleteCartItemEventListenerImpl implements
  @KafkaListener(topics = "cart-delete",
      groupId = "cart-delete-group")
  @Override
- public void delete(Map<UserId, ProductId> userIdProductIdMap) {
+ public void delete(@Payload Map<UserId, ProductId> userIdProductIdMap) {
   repository.deleteAllById(getCartCompositeKeyList(userIdProductIdMap));
  }
 
