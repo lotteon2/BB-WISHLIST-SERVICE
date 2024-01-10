@@ -4,6 +4,10 @@ import org.springframework.data.domain.Pageable;
 
 public class PaginationUtil {
 
+    private PaginationUtil(){
+
+    }
+
     public static int calculateLimitStart(Pageable pageable) {
         return pageable.getPageNumber() * pageable.getPageSize();
     }
