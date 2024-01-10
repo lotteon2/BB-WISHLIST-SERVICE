@@ -46,7 +46,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'com.h2database:h2:2.1.214'
 
-    implementation 'io.github.lotteon-maven:blooming-blooms-utils:202312280924'
+    //common repository
+    implementation 'io.github.lotteon-maven:blooming-blooms-utils:202401091420'
 }
 
 dependencyManagement {
