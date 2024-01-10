@@ -9,6 +9,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class UserId extends BaseId<Long> {
 
+  public UserId(String value){
+    super(Long.valueOf(value));
+  }
   public UserId(Long value) {
     super(value);
   }
