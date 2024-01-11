@@ -49,7 +49,7 @@ dependencies {
     testImplementation 'org.springframework.kafka:spring-kafka-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     //common repository
-    implementation 'io.github.lotteon-maven:blooming-blooms-utils:202401091420'
+    implementation 'io.github.lotteon-maven:blooming-blooms-utils:202401110448'
 }
 
 dependencyManagement {
