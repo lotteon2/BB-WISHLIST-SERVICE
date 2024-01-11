@@ -1,7 +1,9 @@
 package kr.bb.wishlist.cart.repository;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 import kr.bb.wishlist.cart.entity.CartCompositeKey;
 import kr.bb.wishlist.cart.entity.CartEntity;
@@ -15,6 +17,33 @@ class CartRepositoryTest {
 
   @Autowired
   private CartJpaRepository repository;
+
+  @Test
+  void DeleteAllCartItems_WhenCartItemExist_RemoveAll() {
+    Long userId = 1L;
+    String firstProduct = "1";
+    String secondProduct = "2";
+    CartEntity cart1 = CartEntity.builder()
+        .cartCompositekey(new CartCompositeKey(userId, firstProduct))
+        .selectedQuantity(5L)
+        .build();
+
+    CartEntity cart2 = CartEntity.builder()
+        .cartCompositekey(new CartCompositeKey(userId, secondProduct))
+        .selectedQuantity(3L)
+        .build();
+
+    repository.save(cart1);
+    repository.save(cart2);
+
+    List<CartCompositeKey> cartCompositeKeys = new ArrayList<>();
+    cartCompositeKeys.add(new CartCompositeKey(userId, firstProduct));
+    cartCompositeKeys.add(new CartCompositeKey(userId, secondProduct));
+
+    assertDoesNotThrow(() -> {
+      repository.deleteAllById(cartCompositeKeys);
+    });
+  }
 
   @Test
   void GetDESCArrangedTime_WhenCartEntityIsOver2_GetArrangedWithDESC() {

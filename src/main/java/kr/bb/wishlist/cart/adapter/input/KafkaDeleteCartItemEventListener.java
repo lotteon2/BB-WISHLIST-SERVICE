@@ -38,7 +38,6 @@ public class KafkaDeleteCartItemEventListener implements
    CartCompositeKey cartCompositeKey = new CartCompositeKey(userId, productId);
    cartCompositeKeys.add(cartCompositeKey);
   }
-
   return cartCompositeKeys;
  }
 }
