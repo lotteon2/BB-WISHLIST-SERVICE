@@ -43,9 +43,11 @@ dependencies {
     implementation 'mysql:mysql-connector-java:8.0.33'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'com.h2database:h2:2.1.214'
 
+
+    // test
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     //common repository
     implementation 'io.github.lotteon-maven:blooming-blooms-utils:202401091420'
 }
